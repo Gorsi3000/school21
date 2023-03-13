@@ -1,5 +1,7 @@
-#include "data_process.h"
 #include <math.h>
+#include "data_process.h"
+#include "../data_libs/data_stat.h"
+
 
 int normalization(double *data, int n)
 {

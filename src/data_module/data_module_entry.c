@@ -1,14 +1,21 @@
-void main()
+#include <stdlib.h>
+#include "data_process.h"
+#include "../data_libs/data_io.h"
+
+int main()
 {
-    double *data;
-    int n;
+    int n, ret = -1;
+    double *data = NULL;
     
-    //Don`t forget to allocate memory !
+    ret = input(&data, &n);
 
-    input(data, n);
-
-    if (normalization(data, n))
+    if (!ret && !(ret = normalization(data, n)))
         output(data, n);
     else
-        printf("ERROR");  
+        output_error();
+
+    if (data) free_memory(&data);
+
+    return ret;  
 }
+

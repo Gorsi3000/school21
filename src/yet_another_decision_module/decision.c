@@ -1,3 +1,7 @@
+#include "decision.h"
+#include "data_stat.h"
+#include <math.h>
+
 int make_decision(double *data, int n)
 {
     int decision = 1;
