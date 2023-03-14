@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "data_process.h"
-#include "../data_libs/data_io.h"
+#include "data_io.h"
 
 int main()
 {
