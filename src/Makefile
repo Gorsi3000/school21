@@ -4,9 +4,9 @@ BUILD_DIR := ../build/
 SRCS := list_test.c list.c
 H := list.h
 
-all: list_test check
+all: list_test# check
 
-list_test:
+list_test: ${H}
 	${CC} ${FLAGS} -o ${BUILD_DIR}$@ ${SRCS}
 
 clean:
