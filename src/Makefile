@@ -1,16 +1,33 @@
 CC := gcc 
-FLAGS := -Wall -Wextra -Werror
+LFLAGS := -Wall -Wextra -Werror -o
+CFLAGS := -Wall -Wextra -Werror -c
 BUILD_DIR := ../build/
-SRCS := list_test.c list.c
-H := list.h
+OBJ_DIR := ./obj/
+SRCS := list_test.c list.c stack_test.c stack.c
+OBJ_FILES := ${SRCS:.c=.o}
+OBJS = $(addprefix ${OBJ_DIR}, ${OBJ_FILES})
+H := list.h stack.h
 
-all: list_test# check
+all: obj list_test stack_test# check
 
-list_test: ${SRCS} ${H}
-	${CC} ${FLAGS} -o ${BUILD_DIR}$@ ${SRCS}
+obj: $(SRCS)
+	@mkdir -p $(OBJ_DIR)
+
+list_test: $(wildcard list*)
+	${CC} ${LFLAGS} ${BUILD_DIR}Quest_2 ${OBJS}
+
+vars:
+	echo $(OBJS)
+
+stack_test: $(wildcard stack*)
+	${CC} ${LFLAGS} ${BUILD_DIR}Quest_3 ${OBJS}
+
+${OBJS}: ${SRCS}
+	${CC} ${CFLAGS} $@ $<
 
 clean:
 	rm -f ${BUILD_DIR}*
+	rm -fr {OBJ_DIR}
 
 check:
 	@cp ../materials/linters/.clang-format .
