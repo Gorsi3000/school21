@@ -6,7 +6,7 @@ H := list.h
 
 all: list_test# check
 
-list_test: ${H}
+list_test: ${SRCS} ${H}
 	${CC} ${FLAGS} -o ${BUILD_DIR}$@ ${SRCS}
 
 clean:
