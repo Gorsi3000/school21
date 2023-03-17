@@ -1,361 +1,347 @@
-# T10D16
-The Russian version of the task can be found in the repository.
+# T12D18
+The russian version of the task can be found in the repository.
 
-You can find some useful video materials [here](https://edu.21-school.ru/video/selection/0b12ef26-01a2-4bfc-8d74-e1a01c0168fd).
-
-![This_day_will_help_you_get_acquainted_with_characters_and_strings_C](misc/eng/images/day10_door.png)
+![This_day_will_help_you_get_acquainted_with_callbacks,_varargs_&_tree_structures.](misc/eng/images/day12_door.png)
 
 
 ## Contents
 
 1. [Chapter I](#chapter-i) \
- 1.1. [Level 3. Room 2.](#level-3-room-2)
+ 1.1. [Level 3. Room 4.](#level-3-Room-4)
 2. [Chapter II](#chapter-ii) \
-    2.1. [List 1.](#list-1) \
-    2.2. [List 2.](#list-2) 
+ 2.1.  [Quest 1. Print Module.](#quest-1-print-module) 
 3. [Chapter III](#chapter-iii) \
- 3.1. [Quest 1. Strlen.](#quest-1-strlen) \
- 3.2. [Quest 2. Strcmp.](#quest-2-strcmp) \
- 3.3. [Quest 3. Strcpy.](#quest-3-strcpy) \
- 3.4. [Quest 4. Strcat.](#quest-4-strcat) \
- 3.5. [Quest 5. Strchr.](#quest-5-strchr) \
- 3.6. [Quest 6. Strstr.](#quest-6-strstr) \
- 3.7. [Quest 7. Strtok.](#quest-7-strtok) \
- 3.8. [Quest 8*. Width.](#bonus-quest-8-width) 
-4. [Chapter IV](#chapter-iv) 
+ 3.1. [List 1.](#list-1) 
+4. [Chapter IV](#chapter-iv) \
+ 4.1. [Quest 2. Checking Module.](#quest-2-checking-module) 
+5. [Chapter V](#chapter-v) \
+ 5.1. [List 2.](#list-2) \
+ 5.2. [List 3.](#list-3) \
+ 5.3. [List 4.](#list-4) 
+6. [Chapter VI](#chapter-vi) \
+ 6.1. [Quest 3. BST.](#quest-3-bst) \
+ 6.2. [Quest 4. Growing tree.](#quest-4-growing-tree) \
+ 6.3. [Quest 5. Three styles of traversing.](#quest-5-three-styles-of-traversing)
+7. [Chapter VII](#chapter-vii)
 
 
 # Chapter I
 
-## Level 3. Room 2.
+## Level 3. Room 4.
 
 ***LOADING Level 3… \
-LOADING Room 2…***
+LOADING Room 4…***
 
-You find yourself in a room with wonderful furniture and a lot of bookshelves. Wherever you look, there are books. There are books by the door. Even the computer is standing on a stack of books.
+\> *Look around*
 
-![day10_book](misc/eng/images/day10_book.png)
+You enter a new room with no books or weird scrolls on the walls, and only one door. Everything would be fine and quite normal if it wasn't for a huge real tree growing in the middle of the room. You wonder why all the rooms on this level are so strange.. \
+You come closer to the workstation and see an open report in the command terminal, probably from one of the engineers. There's also a couple of yellow leaves fallen from the tree.
 
-\> *Sit down at the computer, start the module and press Enter*
+\> *Study the report*
 
-You see the following lines on the screen:
+    I've recently had to develop a kernel mode driver. 
+    This made a lot of my colleagues very angry and was viewed as a bad engineering move.
 
-    1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+    Like every other piece of code I've written, that driver had a few serious bugs 
+    which caused some interesting side effects. 
+    In particular, the driver prevented a number of other drivers from loading and eventually caused the system to crash.
 
-    Emergency message: standard string.h library calls are unavailable. 
-    The linguistics module cannot work.
-
-\> *find -O3 -L / -name "string.h"*
-
-You wait for n hours and realize that this library simply **does not exist** on the computer.
-
-\> *Pull the door handle*
-
-It doesn't open.
-
-\> *Great, looks like now I'll have to recover this library!*
-
-You look at all the books in the room. You notice that the names of the books on the covers are arranged in alphabetic order.\
-They look like old computer books and printed-out manuals. \
-Something tells you to search for a book related to the string.h library
-
-\> *Search...*
-
-Failure.
-
-\> *Search...*
-
-Failure.
-
-\> *Search...*
-
-Success. You find a book called "The String.h - Linux manual. Complete edition."
-
-\> *Open the book*
-
-It looks a lot like a man printout. Even the font is the same as in the terminal. 
+    I discovered later that many drivers assume that their initialization procedure is always successful 
+    and cannot process a violation... 
+    Several years ago, an AI codenamed virtual_j00ru was developed to document such cases 
+    in a special log, and many of them are still relevant for current OS versions. 
+    As a result, those buggy drivers were no longer a problem: 
+    virtual_j00ru did a great job, saving me a lot of years. 
+    I decided that the AI can not only help with fixing problematic drivers, 
+    but also help me and many other people with many other things: 
+    analyzing the code, finding logical errors,
+    making a shopping list for the week, finding the necessary information, etc. 
+    That's why I focused on expanding its functionality. 
+    I had a lot of work ahead of me, and its first part was adding various structures for 
+    ...
 
 ***LOADING...***
 
 
 # Chapter II
 
-## List 1.
+> **Attention!** All executable files, as before, should be located in the `build` folder of the root directory of the project
 
-\> *Read the book*
+## Quest 1. Print Module.
 
-    PROLOG
-       This manual page is part of the POSIX Programmer's Manual.  The Linux
-       implementation of this interface may differ (consult the
-       corresponding Linux manual page for details of Linux behavior), or
-       the interface may not be implemented on Linux.
-    NAME 
-       string.h — string operations
-    SYNOPSIS
-       #include <string.h>
-    DESCRIPTION
-       Some of the functionality described on this reference page extends
-       the ISO C standard. Applications shall define the appropriate feature
-       test macro (see the System Interfaces volume of POSIX.1‐2008, Section
-       2.2, The Compilation Environment) to enable the visibility of these
-       symbols in this header.
+The report is suddenly interrupted and you see an error message. You study it in more detail and realize that the output module is corrupt (who would have thought!) and needs to be replaced.
+The system suggests adding your own module.
 
-       The <string.h> header shall define NULL and size_t as described in
-       <stddef.h>.
+\> *Search for documentation on the computer*
 
-       The <string.h> header shall define the locale_t type as described in
-       <locale.h>.
+Luck is in the air tonight. The computer has a bit of information about the output module and the documentation module.
 
-       The following shall be declared as functions and may also be defined
-       as macros. Function prototypes shall be provided for use with ISO C
-       standard compilers.
+![day12_leaf](misc/eng/images/day12_leaf.png)
 
-            Chapter 1 - size_t   strlen(const char *);
-            Chapter 2 - int      strcmp(const char *, const char *);
-            Chapter 3 - char    *strcpy(char *restrict, const char *restrict);
-            Chapter 4 - char    *strcat(char *restrict, const char *restrict);
-            Chapter 5 - char    *strchr(const char *, int);
-            Chapter 6 - char    *strstr(const char *, const char *);
-            Chapter 7 - size_t   strnlen(const char *, size_t);
-            Chapter 8 - int      strncmp(const char *, const char *, size_t);
-          
-            ...
+\> *Read the documentation*
 
-       Inclusion of the <string.h> header may also make visible all symbols
-       from <stddef.h>.
+You upload the documentation and study it.
 
-You wonder how many functions this library has... Perhaps you should go the iterative route and try to restart the program module after adding each function. Maybe it doesn't need all the functions.. 
-Otherwise, you can get stuck here for a long time.
+...
 
-\> *Come up to the computer again*
+You study the documentation in more detail and realize that the system simply lacks an output function. The signature of the requesting module looks as follows:
 
-You come up to the computer and notice another open book next to it. Somehow you missed it the first time. The book is open on the "Module Testing: Part 2" chapter
+`void print_log(char (*print) (char), char* message);`
 
-\> *Skim read*
+After more studying, you realize that the core of the system works using callbacks and you need to figure out the display implementation and call it in a module.
 
-***LOADING...***
-
-
-## List 2.
-
->Module testing (unit testing) is a process in computer programming that helps check the correctness of specific modules of source code, 
->sets of one or more software modules, together with the associated control data, and procedures for use and processing.
->The idea is to create tests for every non-trivial function or method. This allows you to quickly check if the new 
->changes in the code have caused a regression, i.e. errors in parts of the program that have already been tested, and facilitates the detection and elimination of such errors.
->The purpose of module testing is to isolate parts of the program and show that they can work individually, minimizing the number of states of the system.
+***== Quest 1 received. Write a print_log function in the src/print_module.c file so it can display the following message using the function transmitted to it with the parameters: "[LOG] current_time message". The current time should be displayed in the HH:MM:SS format. Change the src/main_module_entry_point.c file if necessary. Build the program using the Makefile. Stage name: print_module, executable file name: Quest_1. ==***
 
 ***LOADING...***
 
 
 # Chapter III
 
-## Quest 1. Strlen.
+## List 1.
 
-Perhaps you should also create tests for every new function to make sure they work absolutely correctly. Who knows how broken code can affect the linguistics module that is already not working. And you still need to get out of this room. Plus, if something goes wrong, it will be easier to find the error with the tests. 
+\> *Push the changes to the repository*
 
-For each added function in src/s21_string.h, add a test developed based on the idea of unit testing to the src/s21_string_test.c file, with the name of the function and the _test postfix which checks the function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. 
+    System segmentation fault…
+    Loading module structure seems to be broken
+    System: Output stream module load… success
+                    LOADING...
+                      SUCCESS
+        Continue reading where you left off?
+                        N/Y
 
-> DON'T FORGET! All your programs are tested for the style norm and memory leaks. Start-up instructions
-> the list of tests is also in the `materials` folder
+The report continues with several embedded data structures for use in the AI code. As with any large software project, these general data structures and primitives are provided for reuse in the code. Developers should reuse them whenever possible. \
+The following sections of the documentation describe the following general data structures: Linked lists, Queues, Maps, Binary Trees. Each section contains information with a description, scope, and complexity of the algorithm.
 
-***== Quest 1 received. Create src/s21_string.h and src/s21_string.c files and add declaration and definition of the s21_strlen function to them. Create a test program, src/s21_string_test.c, that should include the s21_strlen_test function for checking the s21_strlen function with a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strlen function, only use language features. Using string.h and other libraries is not allowed. Build the program using the Makefile. Name of the build stage: strlen_tests. The executable file should be stored at the root in the build folder. It should be named Quest_1. ==***
+        SELECT DOCUMENT YOU WANT TO READ?
+                    >...
 
-> It is allowed to use only the following standard libraries: stdlib. h, stdio. h
+                    ERROR…
+                    
+The text is suddenly interrupted and the system starts checking the integrity of the remaining data.
 
-***LOADING...***
+                UNRECOGNIZED OPERATION…
+                FILTER MODULE: MISSED 
 
+The system underlines several lines in the extensive error log:
 
-## Quest 2. Strcmp.
+    System segmentation fault…
+    Loading module structure seems to be broken
+    missed or unknown header: stdarg.h
+    missed or unknown header: varargs.h
+    va_start can’t be used
+    va_arg can’t be used
+    va_end can’t be used
+    use 'man stdarg' to get more information
 
-\> *The first function is ready.*
+\> *What is this?*
 
-\> *Restarting the module*
-
-    1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    11111111111111111111111111111111111111111111111111111111111111111111111111111111111
-
-    Emergency message: standard string.h library calls are unavailable. The linguistics module cannot work.
-
-Let's continue..
-
-***== Quest 2 received.  Add declaration and definition of the s21_strcmp function to src/s21_string.h and src/s21_string.c files. Add the s21_strcmp_test function to the src/s21_string_test.c file for checking the s21_strcmp function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strcmp function, only use language features. Using string.h and other libraries is not allowed. Build the program using the Makefile. Name of the build stage: strcmp_tests. The executable file should be stored at the root in the build folder. It should be named Quest_2. ==***
-
-> It is allowed to use only the following standard libraries: stdlib. h, stdio. h
-
-***LOADING...***
-
-
-## Quest 3. Strcpy.
-
-\> *The second one is ready.*
-
-\> *Restart*
-
-    1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    1111111111111111111111111111111111111111111111111111111111111111
-    
-    Emergency message: standard string.h library calls are unavailable. The linguistics module cannot work.
-
-***== Quest 3 received.  Add declaration and definition of the s21_strcpy function to src/s21_string.h and src/s21_string.c files. Add the s21_strcpy_test function to the src/s21_string_test.c file for checking the s21_strcpy function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strcpy function, only use language features. Using string.h and other libraries is not allowed. Build the program using the Makefile. Name of the build stage: strcpy_tests. The executable file should be stored at the root in the build folder. It should be named Quest_3. ==***
-
-> It is allowed to use only the following standard libraries: stdlib. h, stdio. h
-
-***LOADING...***
-
-
-## Quest 4. Strcat.
-
-\> *Checking module*
-
-    1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    11111111111111111111111111111111111111
-    
-    Emergency message: standard string.h library calls are unavailable. The linguistics module cannot work.
-
-***== Quest 4 received. Add declaration and definition of the s21_strcat function to src/s21_string.h and src/s21_string.c files. Add the s21_strcat_test function to the src/s21_string_test.c file for checking the s21_strcat function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strcat function, only use language features. Using string.h and other libraries is not allowed. Build the program using the Makefile. Name of the build stage: strcat_tests. The executable file should be stored at the root in the build folder. It should be named Quest_4. ==***
-
-> It is allowed to use only the following standard libraries: stdlib. h, stdio. h
-
-***LOADING...***
-
-
-## Quest 5. Strchr.
-
-\> *Yet another boring module check*
-
-    1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    11111
-
-    Emergency message: standard string.h library calls are unavailable. The linguistics module cannot work.
-
-***== Quest 5 received. Add declaration and definition of the s21_strchr function to src/s21_string.h and src/s21_string.c files. Add the s21_strchr_test function to the src/s21_string_test.c file for checking the s21_strchr function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strchr function, only use language features. Using string.h and other libraries is not allowed. Build the program using the Makefile. Name of the build stage: strchr_tests. The executable file should be stored at the root in the build folder. It should be named Quest_5. ==***
-
-> It is allowed to use only the following standard libraries: stdlib. h, stdio. h
-
-***LOADING...***
-
-
-## Quest 6. Strstr.
-
-\> *Checking...*
-
-    1111111111111111111111111111111111111111111111111111111111111111111111111111
-    
-    Emergency message: standard string.h library calls are unavailable. The linguistics module cannot work.
-    
-How many calls does this module use?
-    
-***== Quest 6 received. Add declaration and definition of the s21_strstr function to src/s21_string.h and src/s21_string.c files. Add the s21_strstr_test function to the src/s21_string_test.c file for checking the s21_strstr function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strstr function, only use language features. Using string.h and other libraries is not allowed. Build the program using the Makefile. Name of the build stage: strstr_tests. The executable file should be stored at the root in the build folder. It should be named Quest_6. ==***
-
-> It is allowed to use only the following standard libraries: stdlib. h, stdio. h
-
-***LOADING...***
-
-
-## Quest 7. Strtok.
-
-\> *Again*
-
-    11111111111111111111111111111111
-    111111111
-    111
-    
-    Loading...
-    Uploading...
-    Paging...
-    Done.
-    
-    Module data has been loaded successfully, the module is ready for launch.
-
-Finally!
-
-\> *Confirm module launch*
-
-    Launching reference module...
-    OK!
-    
-    Reference module at your service, how can I help you?
-
-\> *Type in "I need to move further"*
-
-    Question breakdown – failure
-    
-    Emergency message: extended string.h library calls are unavailable – the strtok function is not found.
-    
-Oh, for god's sake. Looks like I have to add this function to the library as well.
-
-***== Quest 7 received. Add declaration and definition of the s21_strtok function to src/s21_string.h and src/s21_string.c files. Add the s21_strtok_test function to the src/s21_string_test.c file for checking the s21_strtok function using a set of test data (minimum 3): normal values, abnormal values, boundary values, etc. For each test, the input, output, and test result (SUCCESS/FAIL) must be output to stdout. Add the launch of this function to main. When developing the s21_strtok function, only use language features. Using string.h and other libraries is not allowed. Build the program using the makefile. Name of the build stage: strtok_tests. The executable file should be stored at the root in the build folder. It should be named Quest_7. ==***
-
-> It is allowed to use only the following standard libraries: <stdlib. h>, <stdio. h>
-
-***LOADING...***
-
-
-## Bonus Quest 8*. Width.
-
-\> *Restarting the module*
-
-    Launching reference module...
-    OK!
-    
-    Reference module at your service, how can I help you?
-    
-\> *Type in "I need to move further"*
-
-    Moving further – identified
-    Searching for information in the database... ... ...
-    
-    Information on the key for room 3–2:
-    To unlock the door in the room 3–2, you need to make a contribution to the word processor
-    under development. Scanning available tickets......
-    ..............................................................
-    ..............................................................
-    ..............................................................
-    Ticket found. Create an src/text_processor.c program with full word processor functionality. 
-    Sources of inspiration: MS Word, LibreOffice, OpenOffice.
-
-\> *Type in "Ok. This is too much."*
-
-    Analyzing the answer.... Answer analyzed.
-    Answer characteristics: sarcasm, pain, discouragement, distrust, fear, rejection.
-    Searching for a compromise....
-    Compromise #1: implement part of the task instead of the whole task.
-    Create an src/text_processor.c program that runs in one mode only 
-    with the -w switch (formatting–justified), taking a number and text of up to 100 characters via stdin.
-    As a result, it should create and output justified text. 
-    The width of a text line in characters is determined by the first number. 
-    After updating the room's remote repository, the door will be unlocked.
-    Compromise #2: leave.
-
-***== Quest 8 received. Create an src/text_processor.c program that takes a number (line width) and text of up to 100 characters, ending with a line break, as input to stdin, when launched with the -w command-line switch. For any other switches, the program should output "n/a". When launched with the -w switch, the program justifies the input text and outputs it to stdout, mimicking the behavior of a word processor. The text should be divided into several lines, each having a specified number of characters. Lines cannot start with a space and cannot end with a space, the last line must not end with a line break. A word can be split to jump to a new line through the symbol '-' only if it does not fit on one line entirely. In all other cases, it must remain intact. The words in a line must be distributed evenly, filling the gaps between them with spaces. Using string.h is not allowed.  Name of the build stage: text_processor. The executable file should be stored at the root in the build folder. It should be named Quest_8. ==***
-
-| Terminal arguments | Input | Output |
-| ------ | ------ | ------ |
-| -w | 10<br/>hello how are you | hello how<br/>are you |
-| -w | 5<br/>ab abcd ab abcd ab abcdefgh | ab<br/>abcd<br/>ab<br/>abcd<br/>ab a-<br/>bcde-<br/>fgh |
-
-> It is allowed to use only the following standard libraries: <stdlib. h>, <stdio. h>
+Whom are you asking after all
 
 ***LOADING...***
 
 
 # Chapter IV
 
-\> *Type in "So I can leave now?"*
+## Quest 2. Checking Module.
 
-    All exit conditions: fulfilled.
-    One more left.
-    Let's talk.
+According to the documentation, it looks like you need to write a function – an AI module described by the following signature:
 
-\> *Type in "Maybe next time...?"*
+`int* check_available_documentation_module(int (*validate) (char*), int document_count, ...);`
 
-    Your answer was predicted by the predictive algorithm with 91% accuracy.
-    Thank you for this insightful discussion and for helping validate predictive linguistic analytics.
-    Take care.
-    Opening the door....
+Based on the signature, the function should apply a callback to each transmitted parameter.
 
-You hear a click and the door is wide open, as if it has a spring. It's time to go! 
+***== Quest 2 received. Write a check_available_documentation_module function in the src/documentation_module.c file so it can apply a validation function transmitted in the parameters to each document it transmits in the parameters. The result of the program operation should be an array of document availability, which is an array of integers (0 - the document is not available, 1 - the document is available). Change the src/main_module_entry_point.c file so that it implements a human-readable output of the availability of documents using the resulting array (format: [document name: (un)available]). For the checked components, set the output field size modifier to 15 units. Note that the function takes an arbitrary number of arguments. Build the program using the Makefile. Stage name: documentation_module, executable file name: Quest_2. ==***
+
+***LOADING...***
+
+
+# Chapter V
+
+## List 2.
+
+> DON'T FORGET! All your programs are tested for the style norm and memory leaks. Start-up instructions
+> the list of tests is also in the `materials` folder
+
+        Validating module…
+        System segmentation fault…
+        Loading module structure seems to be broken
+        Checking available documents:
+            1. Linked lists   : unavailable
+            2. Queues         : unavailable
+            3. Maps           : unavailable
+            4. Binary Trees   : available
+
+        Select document to open:
+        >1
+        LOADING...
+        Document unavailable
+
+        Select document to open:
+        >2
+        LOADING...
+        Document unavailable
+
+        Select document to open:
+        >3
+        LOADING...
+        Document unavailable
+
+        Select document to open:
+        >4
+        LOADING…
+        LOAD: SUCCESS
+        Do you want to read it now? 
+        N/Y
+
+***LOADING...***
+
+
+## List 3.
+
+    Definitions: 
+    A tree is a data structure that enables a hierarchical tree structure.
+    Mathematically speaking, it's an acyclic connected directed graph,
+    where each vertex (called a node) has zero or more outbound edges and zero or one inbound edge. 
+
+    The structure of one element (leaf, node) is described as follows:
+
+```
+typedef struct 		s_btree 
+{
+struct s_btree 	*left; 
+struct s_btree 	*right;
+int 			item; 
+} t_btree;
+```
+
+    A binary tree is a tree the nodes of which have no more than two outbound edges.
+
+![Binary_tree](misc/images/binary_tree.png) \
+Fig. 1. Binary tree.
+
+    PRESS PAGE DOWN TO CONTINUE
+
+
+## List 4.
+
+    Definitions: 
+    Binary search tree (BST) is a binary tree with a specific order 
+    of nodes. The order is often determined using the following induction: 
+    The left subtree of the root only contains nodes with values less than the root. 
+    The right subtree of the root only contains nodes with values higher than the root. 
+    All subtrees are also binary search trees.
+
+Characteristics
+
+|   | on average | worst-case scenario |
+| ------ | ------ | ------ |
+| Storage consumption | O(n)      | O(n)    |
+| Search         | O(log n)      | O(n)    |
+| Insert       | O(log n)      | O(n) |
+| Delete       | O(log n)      | O(n) |
+
+    A binary search tree is therefore a binary tree in which all nodes are ordered
+    so that left child elements are less than their parent and right child elements are bigger 
+    than their parent. Hence, both search for the given node
+    and tree traversal are effective (logarithmic and linear, respectively).
+
+![Binary search tree](misc/images/binary_search_tree.png) \
+Fig. 2. Binary search tree.
+
+    END OF CURRENT DOCUMENT
+    PRESS ANY KEY TO RETURN…
+
+    Validating module…
+    System segmentation fault…
+    AI documentation module found but not loaded correctly… 
+    Hint: Try to sort modules in the right order
+
+***LOADING...***
+
+# Chapter VI
+
+## Quest 3. BST.
+
+\> *So what should I do?*
+
+Looks like you need to follow the subtle clues of the system and sort the AI ​​modules using a binary search tree. Each module has its own numeric id, from 0 to 10. Based on the information you've found on the computer, you know that the documentation module's identifier is 4. \
+Luckily for you, the tree element (leaf) structure is already provided in the documentation. 
+
+The first step is to write a function for creating a node in src/bst.c (the function must save the value in the node and initialize the initial states of the child nodes). The function's signature should look as follows:
+
+`t_btree *bstree_create_node(int item)`
+
+The t_btree type needs to be described in the corresponding header file. Finally, the node creation function should be tested in src/bst_create_test.c using module testing, as it has been done before.
+
+***== Quest 3 received. Create an src/bst.c program with a function for creating a node of a binary search tree, bstree_create_node. Put the description of the type of the tree node in src/bst.h. Using module testing, check the created function in src/bst_create_test.c (at least two input values with an output of what's been created). Build the program using the Makefile. Stage name: bst_create_test, executable file name: Quest_3. ==***
+
+***LOADING...***
+
+
+## Quest 4. Growing tree.
+
+\> *Ready*
+
+Now that the function for creating one element is ready, you can start creating the entire tree by inserting the next node.
+
+The signature of the function should look as follows and also be located in src/bst.c:
+
+`void bstree_insert(t_btree *root, int item, int (*cmpf) (int, int));`
+
+As you can see from the signature, the values of the nodes should be compared using a callback – cmpf. \
+Finally, the function also needs to be tested in src/bst_insert_test.c with at least two different sets of input values and an output where the tree leaf is inserted.
+
+***== Quest 4 received. Supplement the src/bst.c program by implementing the function of inserting a binary search tree node, bstree_insert. Using module testing, check the created function in src/bst_insert_test.c (at least two sets of input values with an output of the location of the tree leaf's insertion). Create an implementation of the comparator function. Build the program using the Makefile. Stage name: bst_insert_test, executable file name: Quest_4. ==***
+
+***LOADING...***
+
+
+## Quest 5. Three styles of traversing.
+
+\> *Looks like all that remains is tree traversal*
+
+You need to create functions for tree traversal. Since there is no information about the exact order in which the AI ​​documentation modules must be located to load correctly, you'll have to write 3 different tree traversal functions:
+– infix: elements will be displayed in ascending order 
+(left subtree -> root -> right subtree);
+– prefix: elements will be displayed in the same order as they are stored 
+(root -> left subtree -> right subtree);
+– postfix: elements will be displayed in descending order 
+(left subtree -> right subtree -> root).
+
+Function signatures look as follows and must all be implemented in src/bst.c:
+
+`void bstree_apply_infix(t_btree *root, void (*applyf) (int));`
+
+`void bstree_apply_prefix(t_btree *root, void (*applyf) (int));`
+
+`void bstree_apply_postfix(t_btree *root, void (*applyf) (int));`
+
+applyf is also a callback to which the node value must be transmitted. This function can, for instance, display the values on the screen. \
+For the tests, take sets of input data from the previous test and create screen output for the trees in three different ways in src/bst_traverse_test.c.
+
+***== Quest 5 received. Supplement the src/bst.c program by implementing tree traversal functions for the binary search tree: bstree_apply_infix, bstree_apply_prefix, bstree_apply_postfix. Using module testing, check the created functions in tests/bst_traverse_test.c (take sets of input data from the previous test and create screen output for the trees in three different ways). Prepare implementation of the applyf function as a function that outputs the value of the node in the terminal. Stage name: bst_traverse_test, executable file name: Quest_5. ==***
+
+***LOADING...***
+
+
+# Chapter VII
+
+\> *Push the solution to the repository*
+
+Verification messages start flickering in the terminal and you are ready to read the end of the report.
+
+    Validating module… 
+    ... 
+    Success 
+    ...
+
+Having waited for 15 minutes for the modules to complete the validation, you realize that the computer has frozen and does not respond to any actions.
+
+\> *Press the restart button on the computer*
+
+The screen light goes off and you notice a little bit of smoke coming out of the computer case. Looks like it has overheated or something has overheated it..\
+Before you come to any conclusion, the door of the room blows out with a sharp sound, like that of an explosion, and hits the tree in the middle of the room.
+"Alright, the exit is clear, the computer is broken. Unfortunately, there's no way to finish reading the report. And the AI is still nowhere to be found. Hopefully it never returns. I can handle the doors very well without him," you think to yourself and step over the threshold.
 
 ***LOADING...***
 

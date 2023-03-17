@@ -1,40 +1,36 @@
-CC := gcc 
-LFLAGS := -Wall -Wextra -Werror -o
-CFLAGS := -Wall -Wextra -Werror -c
+CC := gcc
+CFLAGS := -Wall -Werror -Wextra -c
+LFLAGS := -Wall -Werror -Wextra -o
 BUILD_DIR := ../build/
-OBJ_DIR := ./obj/
-SRCS := list_test.c list.c stack_test.c stack.c
-OBJ_FILES := ${SRCS:.c=.o}
-OBJS = $(addprefix ${OBJ_DIR}, ${OBJ_FILES})
-H := list.h stack.h
+SRC_DIR := ./
+OBJ_DIR	:= ./obj/
+SRC_FILES = print_module.c main_module_entry_point.c
 
-all: obj list_test stack_test# check
+OBJ_FILES = $(SRC_FILES:.c=.o)
+SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
+PM := print_module main_module_entry_point
 
-obj: $(SRCS)
+all: obj print_module check
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+obj: 
 	@mkdir -p $(OBJ_DIR)
 
-list_test: $(wildcard list*)
-	${CC} ${LFLAGS} ${BUILD_DIR}Quest_2 ${OBJS}
+print_module: obj print_module.h $(OBJS)
+	${CC} ${LFLAGS} ${BUILD_DIR}Quest_1 $(OBJS)
 
-vars:
-	echo $(OBJS)
-
-stack_test: $(wildcard stack*)
-	${CC} ${LFLAGS} ${BUILD_DIR}Quest_3 ${OBJS}
-
-${OBJS}: ${SRCS}
-	${CC} ${CFLAGS} $@ $<
-
-clean:
-	rm -f ${BUILD_DIR}*
-	rm -fr {OBJ_DIR}
-
-check:
-	@cp ../materials/linters/.clang-format .
-	clang-format -i ${H} 
-	clang-format -i ${SRCS}
-	cppcheck --enable=all
 
 rebuild: clean all
 
-.PHONY: clean all rebuild
+check:
+	@cp ../materials/linters/.clang-format .
+	clang-format -i *.c *.h
+	cppcheck --enable=all --suppress=missingIncludeSystem ./*c
+
+vars:
+	echo ${OBJS}
+
+.PHONY: all clean rebuild

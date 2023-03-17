@@ -51,4 +51,5 @@ check your program and its source code for the following points:
    To run your executable file using this utility, type in the terminal: \
    ```valgrind --tool=memcheck --leak-check=yes. /main. out```
    
-   It is strongly recommended not to use _valgrind_ utility in OS X, use _leaks_ utility  instead.
+   It is strongly recommended not to use _valgrind_ utility in OS X, use _leaks_ utility instead.
+  
