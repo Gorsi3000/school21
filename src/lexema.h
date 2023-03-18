@@ -14,14 +14,16 @@ enum lexem_type {
     mul,
     bracket_open,
     bracket_close,
-    X
+    X,
+    end
 };
-a
+
 typedef struct lexema
 {
     double value;
     enum lexem_type type;
-
+    double (*one_param)(double a);
+    double (*two_param)(double a, double b);
 } lexema;
 
 #endif
