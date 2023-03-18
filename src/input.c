@@ -9,7 +9,7 @@ int _isdigit(const char c);
 void init_lexem(double value, enum lexem_type type, lexema **lex, int index);
 
 
-lexema ** lexer(void) {
+lexema ** main(void) {
     char *string;
     lexema **lex = (lexema **)malloc(sizeof(lexema *));
     string = (char *)malloc(sizeof(char) * SIZE);
@@ -111,7 +111,7 @@ lexema ** lexer(void) {
         if (ch == '/') {
             init_lexem(0, division, lex, index_lexema);
             lex[index_lexema]->one_param = NULL;
-            lex[index_lexema]->two_param = division;
+            lex[index_lexema]->two_param = _division;
             index_lexema++;
         }
         if (ch == 'x') {
@@ -121,7 +121,7 @@ lexema ** lexer(void) {
             index_lexema++;
         }
     }
-
+    //TODO last lexem
     free(string);
     return lex;
 }

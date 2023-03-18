@@ -19,7 +19,7 @@ double multiply(double a, double b) {
     return a * b;
 }
 
-double division(double a, double b) {
+double _division(double a, double b) {
     if (b == 0) {
         printf("division by zero");
         exit(EXIT_FAILURE);
@@ -28,7 +28,7 @@ double division(double a, double b) {
 }
 
 double ctg(double x) {
-    return tan(PI / 2 - x);
+    return tan(M_PI / 2 - x);
 }
 
 

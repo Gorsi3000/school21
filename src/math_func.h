@@ -5,7 +5,7 @@ double sum(double a, double b);
 double binary_minus(double a, double b);
 double unary_minus(double a);
 double multiply(double a, double b);
-double division(double a, double b);
+double _division(double a, double b);
 double ctg(double x);
 
 #endif
