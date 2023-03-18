@@ -3,8 +3,8 @@
 
 enum lexem_type {
     operand,
-    sin,
-    cos,
+    sinus,
+    cosinus,
     tg,
     ctg,
     min_unary,
@@ -16,7 +16,7 @@ enum lexem_type {
     bracket_close,
     X
 };
-a
+
 typedef struct lexema
 {
     double value;
