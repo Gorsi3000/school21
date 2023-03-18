@@ -41,10 +41,26 @@ lexema ** main(void) {
         }
 
         if (ch == 's') {
-            init_lexem(0, sinus, lex, index_lexema);
-            lex[index_lexema]->one_param = sin;
+            if (string[i] == 'i') {
+                init_lexem(0, sinus, lex, index_lexema);
+                lex[index_lexema]->one_param = sin;
+                lex[index_lexema]->two_param = NULL;
+                i += 2;
+                index_lexema++;
+            }
+            else {
+                init_lexem(0, sqrt_l, lex, index_lexema);
+                lex[index_lexema]->one_param = sqrt;
+                lex[index_lexema]->two_param = NULL;
+                i += 3;
+                index_lexema++;
+            }
+        }
+        if (ch == 'l') {
+            init_lexem(0, log_m, lex, index_lexema);
+            lex[index_lexema]->one_param = log;
             lex[index_lexema]->two_param = NULL;
-            i += 2;
+            i += 3;
             index_lexema++;
         }
         if (ch == 'c') {
