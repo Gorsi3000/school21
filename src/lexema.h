@@ -5,8 +5,8 @@ enum lexem_type {
     operand,
     sinus,
     cosinus,
-    tg,
-    ctg,
+    tangens,
+    catangens,
     min_unary,
     min_binary,
     plus,
@@ -14,13 +14,16 @@ enum lexem_type {
     mul,
     bracket_open,
     bracket_close,
-    X
+    X,
+    end
 };
 
 typedef struct lexema
 {
     double value;
     enum lexem_type type;
+    double (*one_param)(double a);
+    double (*two_param)(double a, double b);
 } lexema;
 
 #endif
