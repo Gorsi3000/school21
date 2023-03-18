@@ -7,6 +7,8 @@ enum lexem_type {
     cosinus,
     tangens,
     catangens,
+    sqrt_l,
+    log_m,
     min_unary,
     min_binary,
     plus,
