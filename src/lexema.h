@@ -1,7 +1,7 @@
 #ifndef LEXEMA_H
 #define LEXEMA_H
 
-enum {
+enum lexem_type{
   operand,
   sin,
   cos,
@@ -15,13 +15,12 @@ enum {
   bracket_open,
   bracket_close,
   X 
-} lexem_type;
+};
 
 typedef struct lexema
 {
     double value;
-    lexem_type type;
-
+    enum lexem_type type;
 } lexema;
 
 #endif
