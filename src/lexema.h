@@ -6,7 +6,7 @@ enum lexem_type {
     sinus,
     cosinus,
     tangens,
-    catangens,
+    cotangens,
     min_unary,
     min_binary,
     plus,

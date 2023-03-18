@@ -57,7 +57,7 @@ lexema ** main(void) {
                 i += 2;
             }
             else {
-                init_lexem(0, catangens, lex, index_lexema);
+                init_lexem(0, cotangens, lex, index_lexema);
                 lex[index_lexema]->one_param = ctg;
                 lex[index_lexema]->two_param = NULL;
                 i += 2;
