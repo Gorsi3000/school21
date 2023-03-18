@@ -3,10 +3,10 @@
 
 enum lexem_type {
     operand,
-    sin,
-    cos,
-    tg,
-    ctg,
+    sinus,
+    cosinus,
+    tangens,
+    catangens,
     min_unary,
     min_binary,
     plus,
