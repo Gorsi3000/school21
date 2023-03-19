@@ -25,7 +25,9 @@ lexema ** input(void) {
     int index_lexema = 0;
     int n_index = 0;
     char number[10];
+    printf("%s\n", string);
     while ((ch = string[i++]) != '\0') {
+        printf("%d: %c %d\n", i, ch, index_lexema);
         while (_isdigit(ch)) {
             number[n_index++] = ch;
             ch = string[i++];
@@ -52,7 +54,7 @@ lexema ** input(void) {
                 init_lexem(0, sqrt_l, lex, index_lexema);
                 lex[index_lexema]->one_param = sqrt;
                 lex[index_lexema]->two_param = NULL;
-                i += 3;
+                i += 2;
                 index_lexema++;
             }
         }
@@ -70,13 +72,13 @@ lexema ** input(void) {
                 lex[index_lexema]->one_param = cos;
                 lex[index_lexema]->two_param = NULL;
                 index_lexema++;
-                i += 2;
+                i += 1;
             }
             else {
                 init_lexem(0, cotangens, lex, index_lexema);
                 lex[index_lexema]->one_param = ctg;
                 lex[index_lexema]->two_param = NULL;
-                i += 2;
+                i += 1;
                 index_lexema++;
             }
         }
@@ -140,9 +142,9 @@ lexema ** input(void) {
     init_lexem(0, end, lex, index_lexema);
     lex[index_lexema]->one_param = NULL;
     lex[index_lexema]->two_param = NULL;
-
+    printf("end\n");
+    printf("___%d___\n", lex[index_lexema]->type);
     free(string);
-       printf("%d\n", index_lexema);
     return lex;
 }
 
