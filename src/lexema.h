@@ -1,14 +1,19 @@
 #ifndef LEXEMA_H
 #define LEXEMA_H
 
-enum lexem_type {
+// Максимальная длина массива лексем
+#define LEX_MAX_SIZE 1000
+// Максимальная длина входной строки
+#define STR_MAX_SIZE 10000
+
+typedef enum {
     operand,
     sinus,
     cosinus,
     tangens,
     cotangens,
     sqrt_l,
-    log_m,
+    log_e,
     min_unary,
     min_binary,
     plus,
@@ -18,12 +23,12 @@ enum lexem_type {
     bracket_close,
     X,
     end
-};
+} lexema_type;
 
 typedef struct lexema
 {
     double value;
-    enum lexem_type type;
+    lexema_type type;
     double (*one_param)(double a);
     double (*two_param)(double a, double b);
 } lexema;

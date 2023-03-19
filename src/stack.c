@@ -25,9 +25,9 @@ node* stack_push(node** head, lexema* lex) {
 lexema* stack_pop(node** head) {
     node* tmp = (*head)->next;
     lexema* val = (*head)->lex;
-    if ((*head)->next == NULL) {
-        exit(STACK_UNDERFLOW);
-    }
+    // if ((*head)->next == NULL) {
+    //     exit(STACK_UNDERFLOW);
+    // }
     free(*head);
     (*head) = tmp;
     return val;

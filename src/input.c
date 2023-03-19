@@ -57,7 +57,7 @@ lexema ** main(void) {
             }
         }
         if (ch == 'l') {
-            init_lexem(0, log_m, lex, index_lexema);
+            init_lexem(0, log_e, lex, index_lexema);
             lex[index_lexema]->one_param = log;
             lex[index_lexema]->two_param = NULL;
             i += 3;
