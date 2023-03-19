@@ -91,25 +91,14 @@ double evaluate (lexema** lex, double x) {
 
 
 lexema** postfix_polish_notashion(lexema** l ) {
-    // lexema l_tmp[6] = {{ 2, operand, NULL, NULL},
-    //                { 0, plus, NULL, NULL},
-    //                { 3, operand, NULL, NULL},
-    //                { 0, mul, NULL, NULL},
-    //                { 4, operand, NULL, NULL},
-    //                { 0, end, NULL, NULL}};
+
     int i = 0;
-    // lexema** l = malloc(sizeof(lexema*) * 6);
-    // while (i < 6) l[i] = &l_tmp[i];
-    // i = 0;
+
     int queue_length = 0;
     lexema* queue[LEX_MAX_SIZE];
     node* op_head = NULL;
 
-    // int len = 0;
-    // while (l[len]->type != end) ++len;
     display_lexemas(l);
-
-
     while (l[i]->type != end) {
         switch (l[i]->type)
         {
@@ -171,8 +160,8 @@ lexema** postfix_polish_notashion(lexema** l ) {
     while (queue[i]->type != end){
         output[i] = queue[i];
         i++;
+        printf("%d  ", --queue_length);
     }
-
     output[i] = queue[i];
     return output;
 }

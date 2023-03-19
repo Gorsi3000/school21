@@ -4,7 +4,7 @@
 #include "stack.h"
 #include "lexer.h"
 #include "math.h"
-// #include "output"
+#include "output.h"
 #define HEIGHT 25
 #define WIDTH 80 
 
@@ -18,8 +18,13 @@ int main(void){
         // break;
         y = evaluate(lex, x);
         arr[i++] = y;
+        printf("%.1lf ", y);
     }
-    i = (int) arr[0];
+        printf("/n");
+
+    output_v2(arr);
+    // i = (int) arr[0];
+
 
     i = 0;
     while (lex[i]->type != end) {

@@ -15,10 +15,10 @@ all: graph
 
 graph: obj ${OBJS} ./lexema.h
 	${CC} ${LFLAGS} ${BUILD_DIR}$@ $(OBJ_DIR)math_func.o $(OBJ_DIR)stack.o $(OBJ_DIR)input.o\
-									$(OBJ_DIR)lexer.o $(OBJ_DIR)graph.o
-lexer: obj ${OBJS} ./lexema.h
-	${CC} ${LFLAGS} ${BUILD_DIR}$@ $(OBJ_DIR)math_func.o $(OBJ_DIR)stack.o $(OBJ_DIR)input.o\
-									$(OBJ_DIR)lexer.o $(OBJ_DIR)output.c
+									$(OBJ_DIR)lexer.o $(OBJ_DIR)graph.o $(OBJ_DIR)output.o
+# lexer: obj ${OBJS} ./lexema.h
+# 	${CC} ${LFLAGS} ${BUILD_DIR}$@ $(OBJ_DIR)math_func.o $(OBJ_DIR)stack.o $(OBJ_DIR)input.o\
+# 									$(OBJ_DIR)lexer.o $(OBJ_DIR)output.o
 
 ${OBJ_DIR}%.o: ${SRC_DIR}%.c
 	$(CC) $(CFLAGS) $< -o $@
