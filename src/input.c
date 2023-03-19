@@ -137,7 +137,10 @@ lexema ** main(void) {
             index_lexema++;
         }
     }
-    //TODO last lexem
+    init_lexem(0, end, lex, index_lexema);
+    lex[index_lexema]->one_param = NULL;
+    lex[index_lexema]->two_param = NULL;
+
     free(string);
     return lex;
 }
