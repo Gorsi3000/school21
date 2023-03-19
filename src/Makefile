@@ -4,21 +4,21 @@ LFLAGS := -Wall -Wextra -Werror -std=c11 -o
 BUILD_DIR := ../build/
 SRC_DIR := ./
 OBJ_DIR	:= ./obj/
-SRC_FILES = math_func.c stack.c input.c output.c\
-			test_transform_to_rpn.c test_tokens.c
+SRC_FILES = graph.c math_func.c stack.c input.c output.c\
+			lexer.c test_tokens.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 
-all: test_tokens test_transform_to_rpn
+all: graph
 
-test_tokens: obj ${OBJS} ./lexema.h
-	${CC} ${LFLAGS} ${BUILD_DIR}$@ $(OBJ_DIR)test_tokens.o $(OBJ_DIR)input.o $(OBJ_DIR)math_func.o
-
-test_transform_to_rpn: obj ${OBJS} ./lexema.h
+graph: obj ${OBJS} ./lexema.h
 	${CC} ${LFLAGS} ${BUILD_DIR}$@ $(OBJ_DIR)math_func.o $(OBJ_DIR)stack.o $(OBJ_DIR)input.o\
-									$(OBJ_DIR)test_transform_to_rpn.o 
+									$(OBJ_DIR)lexer.o $(OBJ_DIR)graph.o
+lexer: obj ${OBJS} ./lexema.h
+	${CC} ${LFLAGS} ${BUILD_DIR}$@ $(OBJ_DIR)math_func.o $(OBJ_DIR)stack.o $(OBJ_DIR)input.o\
+									$(OBJ_DIR)lexer.o $(OBJ_DIR)output.c
 
 ${OBJ_DIR}%.o: ${SRC_DIR}%.c
 	$(CC) $(CFLAGS) $< -o $@

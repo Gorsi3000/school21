@@ -5,40 +5,25 @@
 #include <string.h>
 #include "lexema.h"
 #include "input.h"
-
-
-// Максимальная длина массива лексем
-#define LEX_MAX_SIZE 100
-
-int priority(lexema_type x);        
-int is_prefix(lexema_type type);
-int prior_cmp(lexema_type a, lexema_type b);
-void display_lexemas(lexema** output);
-int is_operator(lexema_type type);
-double evaluate (lexema** lex, double x);
-lexema** postfix_polish_notashion(lexema** l );
-
-int main(){
-
-   lexema** l = postfix_polish_notashion(input());
-
-    for (double x = 0;)
-   evaluate(l, x);
-   return 0;
-}
+#include "lexer.h"
 
 double evaluate (lexema** lex, double x) {
     int i = 0;
-    lexema* l[LEX_MAX_SIZE];
     node* stack_head = NULL;
-    lexema* top_operand = NULL, *second_operand = NULL;
+    lexema* top_operand = NULL, *second_operand = NULL, *new_l = NULL;
 
     while(lex[i]->type != end)
     {
+        //printf("%d\n", i);
         switch (lex[i]->type)
         {
             case operand:
-                stack_push(&stack_head, l[i]);
+                new_l = malloc(sizeof(lexema));
+                new_l->one_param = lex[i]->one_param;
+                new_l->two_param = lex[i]->two_param;
+                new_l->type = lex[i]->type;
+                new_l->value = lex[i]->value;
+                stack_push(&stack_head, new_l);
 
             case bracket_open:
             case bracket_close:
@@ -52,7 +37,7 @@ double evaluate (lexema** lex, double x) {
             case log_e:
             case min_unary:
                 top_operand = stack_pop(&stack_head);
-                top_operand->value = l[i]->one_param(top_operand->value);
+                top_operand->value = lex[i]->one_param(top_operand->value);
                 top_operand->type = operand;
                 top_operand->one_param = NULL;
                 top_operand->two_param = NULL;
@@ -65,33 +50,41 @@ double evaluate (lexema** lex, double x) {
             case mul:
                 top_operand = stack_pop(&stack_head);
                 second_operand = stack_pop(&stack_head);
-                top_operand->value = l[i]->two_param(top_operand->value, second_operand->value);
+                top_operand->value = lex[i]->two_param(top_operand->value, second_operand->value);
                 top_operand->type = operand;
                 top_operand->one_param = NULL;
                 top_operand->two_param = NULL;
                 stack_push(&stack_head, top_operand);
+                free(second_operand);
                 break;
 
             case X:
-                l[i]->value = x;
-                l[i]->type = operand;
-                stack_push(&stack_head, l[i]);
+                new_l = malloc(sizeof(lexema));
+                new_l->one_param = NULL;
+                new_l->two_param = NULL;
+                new_l->type = x;
+                new_l->value = operand;
+                stack_push(&stack_head, new_l);
                 break;
 
             case end: 
                 break;
         }
+        i++;
         
     }
-    double result = stack_pop(&stack_head)->value;
-    i = 0;
-    while (l[i]->type != end) {
-        free(l[i]);
-        i++;
-    }
+    new_l = stack_pop(&stack_head);
+    double result = new_l->value;
+    free(new_l);
+    if (stack_head) printf("error");
+    // i = 0;
+    // while (lex[i]->type != end) {
+    //     free(lex[i]);
+    //     i++;
+    // }
     // удаляем терминальную лексему
-    free(l[i]);
-    free(l);
+    // free(lex[i]);
+    // free(lex);
 
     return result;
 }
@@ -123,6 +116,7 @@ lexema** postfix_polish_notashion(lexema** l ) {
             case end:
                 break;
 
+
             case min_binary:
             case plus:
             case division:
@@ -135,13 +129,13 @@ lexema** postfix_polish_notashion(lexema** l ) {
                 stack_push(&op_head, l[i]);
                 break;
 
+            case min_unary:
             case sqrt_l:
             case log_e:
             case sinus:
             case cosinus:
             case tangens:
             case cotangens:
-            case min_unary:
             case bracket_open:
                 stack_push(&op_head, l[i]);
                 break;
@@ -169,17 +163,17 @@ lexema** postfix_polish_notashion(lexema** l ) {
     queue[queue_length++] = l[i];
     display_lexemas(queue);
 
-    // i = 0;
-    // while(l[i]->type != end) free(l[i]);
-    free(l);
-
+   free(l);
     lexema** output = malloc(queue_length * sizeof(lexema*));
 
     i = 0;
-    while (queue[i]->value != end){
+
+    while (queue[i]->type != end){
         output[i] = queue[i];
         i++;
     }
+
+    output[i] = queue[i];
     return output;
 }
 
@@ -262,20 +256,31 @@ int priority(lexema_type x) {
     int ret;
     switch (x)
     {
+        case sinus:
+        case sqrt_l:
+        case cosinus:
+        case tangens:
+        case cotangens:
+        case log_e:
+            ret = 5;
+        break;
+
+        case min_unary:
+            ret = 6;
+        break;
+
         case min_binary:
         case plus:
-            ret = 1;
+            ret = 2;
         break;
 
 
         case mul:
         case division:
-            ret = 2;
-        break;
-
-        case sqrt_l:
             ret = 3;
         break;
+        
+
 
         case bracket_open:
             ret = 4;
@@ -283,16 +288,6 @@ int priority(lexema_type x) {
 
         case bracket_close:
             ret = 4;
-        break;
-
-        case cosinus:
-        case tangens:
-        case cotangens:
-        case log_e:
-        case min_unary:
-        case sinus:
-            ret = 1;
-            ret = 1;
         break;
 
         case X:
@@ -313,6 +308,7 @@ int is_operator(lexema_type type) {
     int ret;
     switch (type)
     {
+
         case min_binary:
         case plus:
         case mul:
@@ -321,14 +317,14 @@ int is_operator(lexema_type type) {
         break;
 
         case sqrt_l:
-        case bracket_open:
-        case bracket_close:
         case cosinus:
         case tangens:
         case cotangens:
         case log_e:
         case min_unary:
         case sinus:
+        case bracket_open:
+        case bracket_close:
         case X:
         case end:
         case operand:
@@ -343,5 +339,7 @@ int is_prefix(lexema_type type) {
             type == cosinus ||  \
             type == tangens ||  \
             type == cotangens ||\
-            type == min_unary;
+            type == min_unary ||
+            type == log_e ||
+            type == sqrt_l;
 }
