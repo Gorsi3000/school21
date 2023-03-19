@@ -4,7 +4,7 @@ LFLAGS := -Wall -Wextra -Werror -std=c11 -o
 BUILD_DIR := ../build/
 SRC_DIR := ./
 OBJ_DIR	:= ./obj/
-SRC_FILES = math_func.c stack.c tree.c input.c output.c\
+SRC_FILES = math_func.c stack.c input.c output.c\
 			test_transform_to_rpn.c test_tokens.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
