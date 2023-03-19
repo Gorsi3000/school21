@@ -1,1 +1,1 @@
-cos(sin(2*x))-(tg(x)+ctg(x/2))+(ln(x)+ sqrt(x))*tan(x)
+cos(sin(2*x))-tg(x)

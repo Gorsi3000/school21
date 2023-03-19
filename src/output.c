@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct point {
+typedef struct {
     int x;
     int y;
-} Point;
+} point;
 
-void output(Point *out, int n) {
+void output(point *out, int n) {
     int **matrix = (int **)calloc(25, sizeof(int *));
     for (int i = 0; i < 25; i++) {
         matrix[i] = (int *)calloc(80, sizeof(int));

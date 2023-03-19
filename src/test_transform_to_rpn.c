@@ -15,6 +15,7 @@ int priority(lexema_type x);
 int is_prefix(lexema_type type);
 int prior_cmp(lexema_type a, lexema_type b);
 void display_lexemas(lexema** output, int output_length);
+int is_operator(lexema_type type);
 
 int t(void);
 
@@ -55,7 +56,8 @@ int t(void) {
             case division:
             case mul:
                 while (op_head && (is_prefix(op_head->lex->type) || 
-                        prior_cmp(l[i]->type, op_head->lex->type) < 0)) {
+                        (is_operator(op_head->lex->type) && 
+                         prior_cmp(l[i]->type, op_head->lex->type) < 0))) {
                     output[output_length++] = stack_pop(&op_head);
                 }
                 stack_push(&op_head, l[i]);
@@ -69,8 +71,6 @@ int t(void) {
             case cotangens:
             case min_unary:
             case bracket_open:
-                // if (!op_head) op_head = stack_node_create(&l[i]);
-                // else 
                 stack_push(&op_head, l[i]);
                 break;
 
@@ -138,8 +138,11 @@ void display_lexemas(lexema** output, int output_length) {
             break;
 
             case min_binary :
+                            strcpy(str, "-");
+            break;
+
             case min_unary :
-                strcpy(str, "-");
+                strcpy(str, "-un");
             break;
 
             case plus :
@@ -224,6 +227,35 @@ int priority(lexema_type x) {
 int prior_cmp(lexema_type a, lexema_type b) {
     return priority(a) == priority(b) ? 0 : 
            priority(a) > priority(b) ? 1 : -1;
+}
+
+int is_operator(lexema_type type) {
+    int ret;
+    switch (type)
+    {
+        case min_binary:
+        case plus:
+        case mul:
+        case division:
+            ret = 1;
+        break;
+
+        case sqrt_l:
+        case bracket_open:
+        case bracket_close:
+        case cosinus:
+        case tangens:
+        case cotangens:
+        case log_e:
+        case min_unary:
+        case sinus:
+        case X:
+        case end:
+        case operand:
+            ret = 0;
+        break;
+    }
+    return ret;
 }
 
 int is_prefix(lexema_type type) {
