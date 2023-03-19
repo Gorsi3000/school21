@@ -1,15 +1,16 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include "math_func.h"
+
 #include "lexema.h"
+#include "math_func.h"
 #define SIZE 1001
 
 int _isdigit(const char c);
 void init_lexem(double value, lexema_type type, lexema **lex, int index);
 void clear_array(char arr[], int n);
 
-lexema ** input(void) {
+lexema **input(void) {
     char *string;
     lexema **lex = (lexema **)malloc(sizeof(lexema *) * SIZE);
     string = (char *)malloc(sizeof(char) * SIZE);
@@ -44,13 +45,12 @@ lexema ** input(void) {
         }
 
         if (ch == 's') {
-            if (string[i+1] == 'i') {
+            if (string[i + 1] == 'i') {
                 init_lexem(0, sinus, lex, index_lexema);
                 lex[index_lexema]->one_param = sin;
                 i += 1;
                 index_lexema++;
-            }
-            else {
+            } else {
                 init_lexem(0, sqrt_l, lex, index_lexema);
                 lex[index_lexema]->one_param = sqrt;
                 i += 3;
@@ -64,14 +64,13 @@ lexema ** input(void) {
             index_lexema++;
         }
         if (ch == 'c') {
-            char ch2 = string[i+1];
+            char ch2 = string[i + 1];
             if (ch2 == 'o') {
                 init_lexem(0, cosinus, lex, index_lexema);
                 lex[index_lexema]->one_param = cos;
                 index_lexema++;
                 i += 2;
-            }
-            else {
+            } else {
                 init_lexem(0, cotangens, lex, index_lexema);
                 lex[index_lexema]->one_param = ctg;
                 i += 1;
@@ -98,7 +97,7 @@ lexema ** input(void) {
             index_lexema++;
         }
         if (ch == '-') {
-            if (i == 0 || string[i-1] == '(') {
+            if (i == 0 || string[i - 1] == '(') {
                 init_lexem(0, min_unary, lex, index_lexema);
                 lex[index_lexema]->one_param = unary_minus;
                 index_lexema++;
@@ -131,7 +130,6 @@ lexema ** input(void) {
 }
 
 void init_lexem(double value, lexema_type type, lexema **lex, int index) {
-
     lex[index] = (lexema *)malloc(sizeof(lexema));
     if (lex[index] == NULL) {
         printf("Memory allocation error\n");
@@ -145,8 +143,7 @@ void init_lexem(double value, lexema_type type, lexema **lex, int index) {
 
 int _isdigit(const char c) {
     int symbol = c - '0';
-    if (0 <= symbol && symbol <= 9)
-        return 1;
+    if (0 <= symbol && symbol <= 9) return 1;
     return 0;
 }
 

@@ -20,8 +20,7 @@ typedef enum {
     end
 } lexema_type;
 
-typedef struct lexema
-{
+typedef struct lexema {
     double value;
     lexema_type type;
     double (*one_param)(double a);

@@ -34,11 +34,3 @@ lexema* stack_pop(node** head) {
     return val;
 }
 
-void stack_destroy(node** head) {
-    while (head) {
-        node* tmp = (*head)->next;
-        if ((*head)->lex) free((*head)->lex);
-        free(*head);
-        *head = tmp;
-    }
-}

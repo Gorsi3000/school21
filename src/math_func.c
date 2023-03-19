@@ -1,23 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "math_func.h"
 
-double sum(double a, double b) {
-    return a + b;
-}
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-double binary_minus(double a, double b) {
-    return a - b;
-}
+double sum(double a, double b) { return a + b; }
 
-double unary_minus(double a) {
-    return -a;
-}
+double binary_minus(double a, double b) { return a - b; }
 
-double multiply(double a, double b) {
-    return a * b;
-}
+double unary_minus(double a) { return -a; }
+
+double multiply(double a, double b) { return a * b; }
 
 double _division(double a, double b) {
     if (b == 0) {
@@ -27,8 +20,4 @@ double _division(double a, double b) {
     return a / b;
 }
 
-double ctg(double x) {
-    return tan(M_PI / 2 - x);
-}
-
-
+double ctg(double x) { return tan(M_PI / 2 - x); }

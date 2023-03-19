@@ -1,15 +1,14 @@
 
-#include "lexema.h"
 #include "input.h"
-#include "stack.h"
+#include "lexema.h"
 #include "lexer.h"
 #include "math.h"
 #include "output.h"
+#include "stack.h"
 #define HEIGHT 25
-#define WIDTH 80 
+#define WIDTH 80
 
-int main(void){
-
+int main(void) {
     lexema** lex = postfix_polish_notashion(input());
     double arr[WIDTH];
     double y;
@@ -20,11 +19,10 @@ int main(void){
         arr[i++] = y;
         printf("%.1lf ", y);
     }
-        printf("/n");
+    printf("/n");
 
     output_v2(arr);
     // i = (int) arr[0];
-
 
     i = 0;
     while (lex[i]->type != end) {

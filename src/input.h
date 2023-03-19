@@ -1,2 +1,2 @@
 #include "lexema.h"
-lexema ** input(void);
+lexema** input(void);
