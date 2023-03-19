@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include "output.h"
 
-typedef struct {
-    int x;
-    int y;
-} point;
-
 void output_v2(double const array[]) {
     for (double i = -1; i <= 1; i += (1.0 / ((25 - 1) / 2))) {
         for (int j = 0; j < 80; j++) {
