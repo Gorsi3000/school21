@@ -19,13 +19,11 @@ void display_lexemas(lexema** output, int output_length);
 int t(void);
 
 int main(){
-    printf("22222");
-   // t();
+   t();
     return 0;
 }
 
 int t(void) {
-    printf("jgkjgjkhj");
     // lexema l_tmp[6] = {{ 2, operand, NULL, NULL},
     //                { 0, plus, NULL, NULL},
     //                { 3, operand, NULL, NULL},
@@ -42,14 +40,11 @@ int t(void) {
     node* op_head = NULL;
 
     int len = 0;
-       printf("%d\n", len);
     while (l[len]->type != end) ++len;
-    printf("%d\n", len);
     display_lexemas(l, len);
 
 
     while (l[i]->type != end) {
-        printf("%d\n", l[i]->type);
         switch (l[i]->type)
         {
             case end:
@@ -59,7 +54,6 @@ int t(void) {
             case plus:
             case division:
             case mul:
-                // print("is_prefix: %d", is_prefix(op_head->lex->type), )
                 while (op_head && (is_prefix(op_head->lex->type) || 
                         prior_cmp(l[i]->type, op_head->lex->type) < 0)) {
                     output[output_length++] = stack_pop(&op_head);
@@ -74,6 +68,7 @@ int t(void) {
             case tangens:
             case cotangens:
             case min_unary:
+            case bracket_open:
                 // if (!op_head) op_head = stack_node_create(&l[i]);
                 // else 
                 stack_push(&op_head, l[i]);
@@ -86,11 +81,9 @@ int t(void) {
                 // могут быть проблемы, если не найдена открывающая скобка
                 // или если неверно поставлени разделитель
                 // необходимо обработать эти ситуацию
-            //    free(stack_pop(&op_head));
-
+                if (op_head) free(stack_pop(&op_head)); 
                 break;
 
-            case bracket_open:
             case operand:
             case X:
                 output[output_length++] = l[i];
@@ -100,14 +93,9 @@ int t(void) {
         }
         i++;
     }
-
+    while (op_head) output[output_length++] = stack_pop(&op_head);
     display_lexemas(output, output_length);
 
-    while (op_head) output[output_length++] = stack_pop(&op_head);
-
-    i = 0;
-    // printf("%d", output_length);
- 
     i = 0;
     //while(l[i]->type != end) free(l[i]);
     free(l);
@@ -170,12 +158,21 @@ void display_lexemas(lexema** output, int output_length) {
                 strcpy(str, "x");
             break;
 
+            case bracket_open:
+                strcpy(str, "(");
+            break;
+            
+            case bracket_close:
+                strcpy(str, ")");
+            break;
+
             default:
                 sprintf(str, "err type: %d, i:%d", output[i]->type, i);
         }
         i++;
         printf("%s ", str);     
     } 
+    printf("\n");
 }
 
 int priority(lexema_type x) {
