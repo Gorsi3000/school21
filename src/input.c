@@ -142,6 +142,7 @@ lexema ** input(void) {
     lex[index_lexema]->two_param = NULL;
 
     free(string);
+       printf("%d\n", index_lexema);
     return lex;
 }
 

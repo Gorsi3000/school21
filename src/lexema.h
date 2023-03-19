@@ -1,11 +1,6 @@
 #ifndef LEXEMA_H
 #define LEXEMA_H
 
-// Максимальная длина массива лексем
-#define LEX_MAX_SIZE 1000
-// Максимальная длина входной строки
-#define STR_MAX_SIZE 10000
-
 typedef enum {
     operand,
     sinus,

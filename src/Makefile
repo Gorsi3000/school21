@@ -15,7 +15,7 @@ all: run_test
 run_test: ${OBJS}
 	${CC} ${LFLAGS} ${BUILD_DIR}$@ $^
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c #$(SRC_DIR)%.h
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c obj #$(SRC_DIR)%.h
 	$(CC) $(CFLAGS) $< -o $@
 
 obj: 

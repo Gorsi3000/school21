@@ -6,27 +6,42 @@
 #include <string.h>
 #include "input.h"
 
+
+// Максимальная длина массива лексем
+#define LEX_MAX_SIZE 1000
+
 int priority(lexema_type x);        
 int is_prefix(lexema_type type);
 int prior_cmp(lexema_type a, lexema_type b);
-
+void display_lexemas(lexema** output, int output_length);
 
 int main(void) {
-    // lexema l[6] = {{ 2, operand, NULL, NULL},
+    // lexema l_tmp[6] = {{ 2, operand, NULL, NULL},
     //                { 0, plus, NULL, NULL},
     //                { 3, operand, NULL, NULL},
     //                { 0, mul, NULL, NULL},
     //                { 4, operand, NULL, NULL},
     //                { 0, end, NULL, NULL}};
-    lexema** l = input();
     int i = 0;
-    lexema* output[LEX_MAX_SIZE];
+    lexema** l = input();
+    // lexema** l = malloc(sizeof(lexema*) * 6);
+    // while (i < 6) l[i] = &l_tmp[i];
+    // i = 0;
     int output_length = 0;
     // node* val_head;
+    lexema* output[LEX_MAX_SIZE];
     node* op_head = NULL;
     // lexema *l_tmp1, *l_tmp2;
+
+    int len = 0;
+       printf("%d\n", len);
+    while (l[len]->type != end) ++len;
+    printf("%d\n", len);
+    display_lexemas(l, len);
+
+
     while (l[i]->type != end) {
-        // printf("%d\n", l[i]->type);
+        printf("%d\n", l[i]->type);
         switch (l[i]->type)
         {
             case end:
@@ -78,10 +93,22 @@ int main(void) {
         i++;
     }
 
+    display_lexemas(output, output_length);
+
     while (op_head) output[output_length++] = stack_pop(&op_head);
 
     i = 0;
     // printf("%d", output_length);
+ 
+    i = 0;
+    while(l[i]->type != end) free(l[i]);
+    free(l);
+
+    return 0;
+}
+
+void display_lexemas(lexema** output, int output_length) {
+    int i = 0;
     while(i < output_length) {
         char str[20];
         switch (output[i]->type)
@@ -141,11 +168,6 @@ int main(void) {
         i++;
         printf("%s ", str);     
     } 
-    i = 0;
-    while(l[i]->type != end) free(l[i]);
-    free(l);
-
-    return 0;
 }
 
 int priority(lexema_type x) {
