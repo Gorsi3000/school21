@@ -33,4 +33,3 @@ lexema* stack_pop(node** head) {
     (*head) = tmp;
     return val;
 }
-
