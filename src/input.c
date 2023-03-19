@@ -98,7 +98,7 @@ lexema ** input(void) {
             index_lexema++;
         }
         if (ch == '-') {
-            if (i == 0 || string[i-1] == ')') {
+            if (i == 0 || string[i-1] == '(') {
                 init_lexem(0, min_unary, lex, index_lexema);
                 lex[index_lexema]->one_param = unary_minus;
                 index_lexema++;
