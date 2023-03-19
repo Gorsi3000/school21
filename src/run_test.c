@@ -22,9 +22,10 @@ int main(void) {
     lexema* output[LEX_MAX_SIZE];
     int output_length = 0;
     // node* val_head;
-    node* op_head;
+    node* op_head = NULL;
     // lexema *l_tmp1, *l_tmp2;
     while (l[i].type != end) {
+        // printf("%d\n", l[i].type);
         switch (l[i].type)
         {
             case end:
@@ -34,8 +35,9 @@ int main(void) {
             case plus:
             case division:
             case mul:
-                while (is_prefix(op_head->lex->type) || 
-                        prior_cmp(l[i].type, op_head->lex->type) < 0) {
+                // print("is_prefix: %d", is_prefix(op_head->lex->type), )
+                while (op_head && (is_prefix(op_head->lex->type) || 
+                        prior_cmp(l[i].type, op_head->lex->type) < 0)) {
                     output[output_length++] = stack_pop(&op_head);
                 }
                 stack_push(&op_head, &l[i]);
@@ -48,12 +50,13 @@ int main(void) {
             case tangens:
             case cotangens:
             case min_unary:
-                if (!op_head) op_head = stack_init(&l[i]);
-                else stack_push(&op_head, &l[i]);
+                // if (!op_head) op_head = stack_node_create(&l[i]);
+                // else 
+                stack_push(&op_head, &l[i]);
                 break;
 
             case bracket_close:
-                while (op_head->lex->type != bracket_open) {
+                while (op_head && op_head->lex->type != bracket_open) {
                     output[output_length++] = stack_pop(&op_head);
                 }
                 // могут быть проблемы, если не найдена открывающая скобка
@@ -67,7 +70,7 @@ int main(void) {
             case operand:
             case X:
                 output[output_length++] = &l[i];
-                // if (!val_head) val_head = stack_init(&l[i]);
+                // if (!val_head) val_head = stack_node_create(&l[i]);
                 // else stack_push(&val_head, &l[i]);
                 break;
         }
@@ -77,12 +80,13 @@ int main(void) {
     while (op_head) output[output_length++] = stack_pop(&op_head);
 
     i = 0;
+    // printf("%d", output_length);
     while(i < output_length) {
         char str[20];
         switch (output[i]->type)
         {
             case operand :   
-                sprintf(str, "%lf", output[i]->value);
+                sprintf(str, "%.2lf", output[i]->value);
             break;
 
             case sinus :

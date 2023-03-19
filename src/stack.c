@@ -4,7 +4,7 @@
 #define STACK_OVERFLOW 1
 #define STACK_UNDERFLOW 2
 
-node* stack_init(lexema* lex) {
+node* stack_node_create(lexema* lex) {
     node* new_node = NULL;
     new_node = (node*)malloc(sizeof(node));
     if (!new_node) exit(STACK_OVERFLOW);
@@ -15,10 +15,11 @@ node* stack_init(lexema* lex) {
 }
 
 node* stack_push(node** head, lexema* lex) {
-    node* new_node = stack_init((*head)->lex);
-    new_node->next = (*head)->next;
-    (*head)->next = new_node;
-    (*head)->lex = lex;
+    node* new_node = stack_node_create(lex);
+    if (head) {
+        new_node->next = (*head);
+    }
+    (*head) = new_node;
     return *head;
 }
 
