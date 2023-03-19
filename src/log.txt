@@ -1,10 +1,11 @@
 Ввод                        Ожидаемый вывод                         Наш вывод
-2*cos(x)*2*cos(x /2*x)      2 x cos * 2 * x 2 / x * cos *           2.00 x cos 2.00 x 2.00 x * / cos * * * 
-2*cos(x)/2*cos(x /2*x)      2 x cos * 2 / x 2 / x * cos *           2.00 x cos 2.00 x 2.00 x * / cos * / * 
-2*cos(x)-2*cos(x /2*x)      2 x cos * 2 x 2 / x * cos * -           2.00 x cos * 2.00 x 2.00 x * / cos * - 
-2*cos(x)+2*cos(x/2*x)       2 x cos * 2 x 2 / x * cos * +           2.00 x cos * 2.00 x 2.00 x * / cos * + 
+2*cos(x)*2*cos(x/2*x)      2 x cos * 2 * x 2 / x * cos *           2.00 x cos 2.00 x 2.00 x * / cos * * * 
+2*cos(x)/2*cos(x/2*x)      2 x cos * 2 / x 2 / x * cos *           2.00 x cos 2.00 x 2.00 x * / cos * / * 
+2*cos(x)-2*cos(x/2*x)      2 x cos * 2 x 2 / x * cos * -           2.00 x cos * 2.00 x 2.00 x * / cos * - 
+2*cos(x)+2*cos(x/2*x)      2 x cos * 2 x 2 / x * cos * +           2.00 x cos * 2.00 x 2.00 x * / cos * + 
+cos(x/2*x)                 x 2 / x * cos                           x 2.00 x * / cos                             //не правильный вывод в случае (x/2*x) и (x/2/x)
 
-2*cos(x)*2*cos(x+2*x)       2 x cos * 2 * x 2 x * + cos *           2.00 x cos 2.00 x 2.00 x * + cos * * * 
+2*cos(x)*2*cos(x+2*x)       2 x cos * 2 * x 2 x * + cos *           2.00 x cos 2.00 x 2.00 x * + cos * * *      //не правильный вывод в случае (x+2*x) и (x+2+x) и (x/2-x), только при умножении и делении между двумя выражениями cos, sin тд
 2*cos(x)/2*cos(x+2*x)       2 x cos * 2 / x 2 x * + cos *           2.00 x cos 2.00 x 2.00 x * + cos * / * 
 
 2*cos(x)/2*cos(x-2*x)       2 x cos * 2 / x 2 x * - cos *           2.00 x cos 2.00 x 2.00 x * - cos * / * 
@@ -15,4 +16,31 @@
 2*cos(x)*2*cos(x*2*x)       2 x cos * 2 * x 2 * x * cos *           2.00 x cos 2.00 x 2.00 x * * cos * * *
 2*cos(x)+2*cos(x*2*x)       2 x cos * 2 x 2 * x * cos * +           2.00 x cos * 2.00 x 2.00 x * * cos * + 
 
-2*cos(x)+2*cos(x+2*x+5)     2 x cos * 2 x 2 x * + 5 + cos * +       2.00 x cos * 2.00 x 2.00 x * 5.00 + + cos * + 
+sin(x)+cos(x)+ctg(x)        x sin x cos + x cot +                   x x cos sin x cos + + 
+
+
+cos(x+2*x+5)                x 2 x * + 5 + cos                       x 2.00 x * 5.00 + + cos     // неправильный вывод, когда в скобках содержится более 3 отношений
+
+2*cos(x)+2*cos(1.5*x)       2 x cos * 2 1.5 x * cos * +             2.00 x cos * 2.00 1.00 5.00 x * cos * + //дробь читает как два числа (во всех случаях)
+
+2/3*sin(x)-cos(x)           2 3 / x sin * x cos -                   2.00 3.00 x sin * / x cos -
+2/3+sin(x)-cos(x)           2 3 / x sin + x cos -                   2.00 3.00 / x sin x cos - + 
+2/3-sin(x)-cos(x)           2 3 / x sin - x cos -                   2.00 3.00 / x sin x cos - - 
+2/3/sin(x)-cos(x)           2 3 / x sin / x cos -                   2.00 3.00 x sin / / x cos -  //неправильный вывод при постановке дроби перед sin, cos, tg, ctg
+
+sin(9*2/3x)                 9 2 * 3x / sin                          9.00 2.00 3.00 x / * sin   //неправильный вывод при постановке дроби при постановки в скобках(кроме: sin(2/3x) - пример)
+sin(2/3*9x)                 2 3 / 9x * sin                          2.00 3.00 9.00 x * / sin 
+
+-5*sin(x)                   5 x sin * -                             5.00 -un x sin *  //значения с унарным минусом выводит неправильно 
+
+5*sin(-3*x)                5 3 x * - sin *                         5.00 3.00 -un x * sin *   //значения с унарным минусом выводит неправильно 
+
+//при вводе букв и символов, не учитываемых в задании, программа пропускает их, выдавая ответ, не отображая их
+
+ln(x)+x                     x log x +                               x x + ln   //неправильно работает при работе с логарифмом при +-/* на что-то
+ln(x)-5                     x log 5 -                               x 5.00 - ln 
+
+х-ln(x)                     x x log -                               x ln -  //не видит второй х
+
+sin(23f5x)                                                          23.00 5.00 x sin  //при вводе буквы между числами, читает как два числа 
+
