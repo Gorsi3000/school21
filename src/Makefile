@@ -4,7 +4,7 @@ LFLAGS := -Wall -Wextra -Werror -o
 BUILD_DIR := ../build/
 SRC_DIR := ./
 OBJ_DIR	:= ./obj/
-SRC_FILES = math_func.c run_test.c stack.c tree.c
+SRC_FILES = math_func.c run_test.c stack.c tree.c input.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))

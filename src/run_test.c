@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "input.h"
 
 int priority(lexema_type x);        
 int is_prefix(lexema_type type);
@@ -11,22 +12,22 @@ int prior_cmp(lexema_type a, lexema_type b);
 
 
 int main(void) {
-    lexema l[6] = {{ 2, operand, NULL, NULL},
-                   { 0, plus, NULL, NULL},
-                   { 3, operand, NULL, NULL},
-                   { 0, mul, NULL, NULL},
-                   { 4, operand, NULL, NULL},
-                   { 0, end, NULL, NULL}};
-
+    // lexema l[6] = {{ 2, operand, NULL, NULL},
+    //                { 0, plus, NULL, NULL},
+    //                { 3, operand, NULL, NULL},
+    //                { 0, mul, NULL, NULL},
+    //                { 4, operand, NULL, NULL},
+    //                { 0, end, NULL, NULL}};
+    lexema** l = input();
     int i = 0;
     lexema* output[LEX_MAX_SIZE];
     int output_length = 0;
     // node* val_head;
     node* op_head = NULL;
     // lexema *l_tmp1, *l_tmp2;
-    while (l[i].type != end) {
-        // printf("%d\n", l[i].type);
-        switch (l[i].type)
+    while (l[i]->type != end) {
+        // printf("%d\n", l[i]->type);
+        switch (l[i]->type)
         {
             case end:
                 break;
@@ -37,10 +38,10 @@ int main(void) {
             case mul:
                 // print("is_prefix: %d", is_prefix(op_head->lex->type), )
                 while (op_head && (is_prefix(op_head->lex->type) || 
-                        prior_cmp(l[i].type, op_head->lex->type) < 0)) {
+                        prior_cmp(l[i]->type, op_head->lex->type) < 0)) {
                     output[output_length++] = stack_pop(&op_head);
                 }
-                stack_push(&op_head, &l[i]);
+                stack_push(&op_head, l[i]);
                 break;
 
             case sqrt_l:
@@ -52,7 +53,7 @@ int main(void) {
             case min_unary:
                 // if (!op_head) op_head = stack_node_create(&l[i]);
                 // else 
-                stack_push(&op_head, &l[i]);
+                stack_push(&op_head, l[i]);
                 break;
 
             case bracket_close:
@@ -69,7 +70,7 @@ int main(void) {
             case bracket_open:
             case operand:
             case X:
-                output[output_length++] = &l[i];
+                output[output_length++] = l[i];
                 // if (!val_head) val_head = stack_node_create(&l[i]);
                 // else stack_push(&val_head, &l[i]);
                 break;
@@ -140,6 +141,9 @@ int main(void) {
         i++;
         printf("%s ", str);     
     } 
+    i = 0;
+    while(l[i]->type != end) free(l[i]);
+    free(l);
 
     return 0;
 }
