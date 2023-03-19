@@ -1,21 +1,31 @@
 #include "stack.h"
-#include "tree.h"
+// #include "tree.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "lexema.h"
 #include "input.h"
 
 
 // Максимальная длина массива лексем
-#define LEX_MAX_SIZE 1000
+#define LEX_MAX_SIZE 100
 
 int priority(lexema_type x);        
 int is_prefix(lexema_type type);
 int prior_cmp(lexema_type a, lexema_type b);
 void display_lexemas(lexema** output, int output_length);
 
-int main(void) {
+int t(void);
+
+int main(){
+    printf("22222");
+   // t();
+    return 0;
+}
+
+int t(void) {
+    printf("jgkjgjkhj");
     // lexema l_tmp[6] = {{ 2, operand, NULL, NULL},
     //                { 0, plus, NULL, NULL},
     //                { 3, operand, NULL, NULL},
@@ -28,10 +38,8 @@ int main(void) {
     // while (i < 6) l[i] = &l_tmp[i];
     // i = 0;
     int output_length = 0;
-    // node* val_head;
     lexema* output[LEX_MAX_SIZE];
     node* op_head = NULL;
-    // lexema *l_tmp1, *l_tmp2;
 
     int len = 0;
        printf("%d\n", len);
@@ -101,7 +109,7 @@ int main(void) {
     // printf("%d", output_length);
  
     i = 0;
-    while(l[i]->type != end) free(l[i]);
+    //while(l[i]->type != end) free(l[i]);
     free(l);
 
     return 0;
