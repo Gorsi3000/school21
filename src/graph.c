@@ -17,9 +17,7 @@ int main(void) {
         // break;
         y = evaluate(lex, x);
         arr[i++] = y;
-        printf("%.1lf ", y);
     }
-    printf("/n");
 
     output_v2(arr);
     // i = (int) arr[0];

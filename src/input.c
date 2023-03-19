@@ -124,7 +124,6 @@ lexema **input(void) {
         i++;
     }
     init_lexem(0, end, lex, index_lexema);
-    printf("end\n");
     free(string);
     return lex;
 }
