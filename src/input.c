@@ -6,10 +6,10 @@
 #define SIZE 1001
 
 int _isdigit(const char c);
-void init_lexem(double value, enum lexem_type type, lexema **lex, int index);
+void init_lexem(double value, lexema_type type, lexema **lex, int index);
 
 
-lexema ** main(void) {
+lexema ** input(void) {
     char *string;
     lexema **lex = (lexema **)malloc(sizeof(lexema *));
     string = (char *)malloc(sizeof(char) * SIZE);
@@ -57,7 +57,7 @@ lexema ** main(void) {
             }
         }
         if (ch == 'l') {
-            init_lexem(0, log_m, lex, index_lexema);
+            init_lexem(0, log_e, lex, index_lexema);
             lex[index_lexema]->one_param = log;
             lex[index_lexema]->two_param = NULL;
             i += 3;
@@ -145,7 +145,7 @@ lexema ** main(void) {
     return lex;
 }
 
-void init_lexem(double value, enum lexem_type type, lexema **lex, int index) {
+void init_lexem(double value, lexema_type type, lexema **lex, int index) {
     lex[index] = (lexema *)malloc(sizeof(lexema));
     if (lex[index] == NULL) {
         printf("Memory allocation error\n");

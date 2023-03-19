@@ -1,4 +1,4 @@
-#include "bst.h"
+#include "tree.h"
 
 #include <stdlib.h>
 
@@ -14,17 +14,17 @@ tree_node *tree_node_create(int item) {
 }
 
 void tree_node_insert(tree_node **root, int item, int (*cmpf)(int, int)) {
-    tree_node *current = root;
+    tree_node *current = *root;
     if (!root)
         *root = tree_node_create(item);
     else if (cmpf(item, current->item) < 0) {
             if (current->left)
-                tree_node_insert(current->left, item, cmpf);
+                tree_node_insert(&(current->left), item, cmpf);
             else
                 current->left = tree_node_create(item);
         } else {
             if (current->right)
-                tree_node_insert(current->right, item, cmpf);
+                tree_node_insert(&(current->right), item, cmpf);
             else
                 current->right = tree_node_create(item);
     }
