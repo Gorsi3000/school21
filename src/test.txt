@@ -1,1 +1,1 @@
-cos(sin(2*x))-tg(x)
+cos(sin(2*x))-(tg(x)

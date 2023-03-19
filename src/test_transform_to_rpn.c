@@ -1,5 +1,4 @@
 #include "stack.h"
-// #include "tree.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,17 +13,91 @@
 int priority(lexema_type x);        
 int is_prefix(lexema_type type);
 int prior_cmp(lexema_type a, lexema_type b);
-void display_lexemas(lexema** output, int output_length);
+void display_lexemas(lexema** output);
 int is_operator(lexema_type type);
-
-int t(void);
+double evaluate (lexema** lex, double x);
+lexema** postfix_polish_notashion(lexema** l );
 
 int main(){
-   t();
-    return 0;
+
+   lexema** l = postfix_polish_notashion(input());
+
+    for (double x = 0;)
+   evaluate(l, x);
+   return 0;
 }
 
-int t(void) {
+double evaluate (lexema** lex, double x) {
+    int i = 0;
+    lexema* l[LEX_MAX_SIZE];
+    node* stack_head = NULL;
+    lexema* top_operand = NULL, *second_operand = NULL;
+
+    while(lex[i]->type != end)
+    {
+        switch (lex[i]->type)
+        {
+            case operand:
+                stack_push(&stack_head, l[i]);
+
+            case bracket_open:
+            case bracket_close:
+                break;
+
+            case sinus:
+            case cosinus:
+            case tangens:
+            case cotangens:
+            case sqrt_l:
+            case log_e:
+            case min_unary:
+                top_operand = stack_pop(&stack_head);
+                top_operand->value = l[i]->one_param(top_operand->value);
+                top_operand->type = operand;
+                top_operand->one_param = NULL;
+                top_operand->two_param = NULL;
+                stack_push(&stack_head, top_operand);
+            break;
+
+            case min_binary:
+            case plus:
+            case division:
+            case mul:
+                top_operand = stack_pop(&stack_head);
+                second_operand = stack_pop(&stack_head);
+                top_operand->value = l[i]->two_param(top_operand->value, second_operand->value);
+                top_operand->type = operand;
+                top_operand->one_param = NULL;
+                top_operand->two_param = NULL;
+                stack_push(&stack_head, top_operand);
+                break;
+
+            case X:
+                l[i]->value = x;
+                l[i]->type = operand;
+                stack_push(&stack_head, l[i]);
+                break;
+
+            case end: 
+                break;
+        }
+        
+    }
+    double result = stack_pop(&stack_head)->value;
+    i = 0;
+    while (l[i]->type != end) {
+        free(l[i]);
+        i++;
+    }
+    // удаляем терминальную лексему
+    free(l[i]);
+    free(l);
+
+    return result;
+}
+
+
+lexema** postfix_polish_notashion(lexema** l ) {
     // lexema l_tmp[6] = {{ 2, operand, NULL, NULL},
     //                { 0, plus, NULL, NULL},
     //                { 3, operand, NULL, NULL},
@@ -32,17 +105,16 @@ int t(void) {
     //                { 4, operand, NULL, NULL},
     //                { 0, end, NULL, NULL}};
     int i = 0;
-    lexema** l = input();
     // lexema** l = malloc(sizeof(lexema*) * 6);
     // while (i < 6) l[i] = &l_tmp[i];
     // i = 0;
-    int output_length = 0;
-    lexema* output[LEX_MAX_SIZE];
+    int queue_length = 0;
+    lexema* queue[LEX_MAX_SIZE];
     node* op_head = NULL;
 
-    int len = 0;
-    while (l[len]->type != end) ++len;
-    display_lexemas(l, len);
+    // int len = 0;
+    // while (l[len]->type != end) ++len;
+    display_lexemas(l);
 
 
     while (l[i]->type != end) {
@@ -58,7 +130,7 @@ int t(void) {
                 while (op_head && (is_prefix(op_head->lex->type) || 
                         (is_operator(op_head->lex->type) && 
                          prior_cmp(l[i]->type, op_head->lex->type) < 0))) {
-                    output[output_length++] = stack_pop(&op_head);
+                    queue[queue_length++] = stack_pop(&op_head);
                 }
                 stack_push(&op_head, l[i]);
                 break;
@@ -76,7 +148,7 @@ int t(void) {
 
             case bracket_close:
                 while (op_head && op_head->lex->type != bracket_open) {
-                    output[output_length++] = stack_pop(&op_head);
+                    queue[queue_length++] = stack_pop(&op_head);
                 }
                 // могут быть проблемы, если не найдена открывающая скобка
                 // или если неверно поставлени разделитель
@@ -86,26 +158,34 @@ int t(void) {
 
             case operand:
             case X:
-                output[output_length++] = l[i];
+                queue[queue_length++] = l[i];
                 // if (!val_head) val_head = stack_node_create(&l[i]);
                 // else stack_push(&val_head, &l[i]);
                 break;
         }
         i++;
     }
-    while (op_head) output[output_length++] = stack_pop(&op_head);
-    display_lexemas(output, output_length);
+    while (op_head) queue[queue_length++] = stack_pop(&op_head);
+    queue[queue_length++] = l[i];
+    display_lexemas(queue);
 
-    i = 0;
-    //while(l[i]->type != end) free(l[i]);
+    // i = 0;
+    // while(l[i]->type != end) free(l[i]);
     free(l);
 
-    return 0;
+    lexema** output = malloc(queue_length * sizeof(lexema*));
+
+    i = 0;
+    while (queue[i]->value != end){
+        output[i] = queue[i];
+        i++;
+    }
+    return output;
 }
 
-void display_lexemas(lexema** output, int output_length) {
+void display_lexemas(lexema** output) {
     int i = 0;
-    while(i < output_length) {
+    while(output[i]->type != end) {
         char str[20];
         switch (output[i]->type)
         {
