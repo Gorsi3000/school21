@@ -34,13 +34,13 @@ lexema ** input(void) {
         }
         if (flag) {
             double digit = atof(number);
-            printf("digit = %lf \n", digit);
             init_lexem(digit, operand, lex, index_lexema);
             index_lexema++;
             flag = 0;
             clear_array(number, 10);
             n_index = 0;
             i--;
+            ch = string[i];
         }
 
         if (ch == 's') {
