@@ -1,4 +1,6 @@
 #include "stack.h"
+#include "mem.h"
+#include "lexema.h"
 
 #include <stdlib.h>
 #define STACK_OVERFLOW 1
@@ -6,7 +8,7 @@
 
 node* stack_node_create(lexema* lex) {
     node* new_node = NULL;
-    new_node = (node*)malloc(sizeof(node));
+    new_node = (node*)mem_malloc(sizeof(node));
     if (!new_node) exit(STACK_OVERFLOW);
 
     new_node->lex = lex;
@@ -24,12 +26,18 @@ node* stack_push(node** head, lexema* lex) {
 }
 
 lexema* stack_pop(node** head) {
-    node* tmp = (*head)->next;
-    lexema* val = (*head)->lex;
-    // if ((*head)->next == NULL) {
-    //     exit(STACK_UNDERFLOW);
-    // }
-    free(*head);
-    (*head) = tmp;
+    lexema* val = NULL; 
+    
+    if ((*head) != NULL) {
+        node* tmp = (*head)->next;
+
+        val = (*head)->lex;
+        // if ((*head)->next == NULL) {
+        //     exit(STACK_UNDERFLOW);
+        // }
+        mem_free(*head);
+        (*head) = tmp;
+
+    }
     return val;
 }

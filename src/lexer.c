@@ -8,18 +8,18 @@
 #include "input.h"
 #include "lexema.h"
 #include "stack.h"
+#include "mem.h"
+#include "math_func.h"
 
 double evaluate(lexema** lex, double x) {
     int i = 0;
     node* stack_head = NULL;
     lexema *top_operand = NULL, *second_operand = NULL, *new_l = NULL;
-    printf("%.lf\n", x);
-
+    int inf_flag = 0;
     while (lex[i]->type != end) {
-        // printf("%d\n", i);
         switch (lex[i]->type) {
             case operand:
-                new_l = malloc(sizeof(lexema));
+                new_l = mem_malloc(sizeof(lexema));
                 new_l->one_param = lex[i]->one_param;
                 new_l->two_param = lex[i]->two_param;
                 new_l->type = lex[i]->type;
@@ -30,16 +30,25 @@ double evaluate(lexema** lex, double x) {
             case bracket_close:
                 break;
 
+            case sqrt_l:
+            case log_e:
+                top_operand = stack_pop(&stack_head);
+                top_operand->value = lex[i]->one_param(top_operand->value);
+                top_operand->type = operand;
+                top_operand->one_param = NULL;
+                top_operand->two_param = NULL;
+                stack_push(&stack_head, top_operand);
+                if (top_operand->value == -100000) inf_flag = 1;
+                break;
+
+
             case sinus:
             case cosinus:
             case tangens:
             case cotangens:
-            case sqrt_l:
-            case log_e:
             case min_unary:
                 top_operand = stack_pop(&stack_head);
                 top_operand->value = lex[i]->one_param(top_operand->value);
-                printf("%.1lf  ", top_operand->value);
                 top_operand->type = operand;
                 top_operand->one_param = NULL;
                 top_operand->two_param = NULL;
@@ -48,7 +57,6 @@ double evaluate(lexema** lex, double x) {
 
             case min_binary:
             case plus:
-            case division:
             case mul:
                 top_operand = stack_pop(&stack_head);
                 second_operand = stack_pop(&stack_head);
@@ -57,15 +65,27 @@ double evaluate(lexema** lex, double x) {
                 top_operand->one_param = NULL;
                 top_operand->two_param = NULL;
                 stack_push(&stack_head, top_operand);
-                free(second_operand);
+                mem_free(second_operand);
                 break;
 
+            case division:
+                top_operand = stack_pop(&stack_head);
+                second_operand = stack_pop(&stack_head);
+                top_operand->value = lex[i]->two_param(second_operand->value, top_operand->value);
+                top_operand->type = operand;
+                top_operand->one_param = NULL;
+                top_operand->two_param = NULL;
+                stack_push(&stack_head, top_operand);
+                mem_free(second_operand);
+                if (top_operand->value == -100000) inf_flag = 1;
+                break;
+            
             case X:
-                new_l = malloc(sizeof(lexema));
+                new_l = mem_malloc(sizeof(lexema));
                 new_l->one_param = NULL;
                 new_l->two_param = NULL;
-                new_l->type = x;
-                new_l->value = operand;
+                new_l->value = x;
+                new_l->type = operand;
                 stack_push(&stack_head, new_l);
                 break;
 
@@ -75,18 +95,15 @@ double evaluate(lexema** lex, double x) {
         i++;
     }
     new_l = stack_pop(&stack_head);
-    double result = new_l->value;
-    free(new_l);
-    if (stack_head) printf("error");
-    // i = 0;
-    // while (lex[i]->type != end) {
-    //     free(lex[i]);
-    //     i++;
-    // }
-    // удаляем терминальную лексему
-    // free(lex[i]);
-    // free(lex);
 
+    double result;
+    if (new_l) {
+        result = new_l->value;
+        mem_free(new_l);
+    }
+    else result = N_A;
+
+    if (stack_head) printf("error");
     return result;
 }
 
@@ -133,7 +150,7 @@ lexema** postfix_polish_notashion(lexema** l) {
                 // могут быть проблемы, если не найдена открывающая скобка
                 // или если неверно поставлени разделитель
                 // необходимо обработать эти ситуацию
-                if (op_head) free(stack_pop(&op_head));
+                if (op_head) mem_free(stack_pop(&op_head));
                 break;
 
             case operand:
@@ -145,20 +162,20 @@ lexema** postfix_polish_notashion(lexema** l) {
         }
         i++;
     }
+
     while (op_head) queue[queue_length++] = stack_pop(&op_head);
     queue[queue_length++] = l[i];
     display_lexemas(queue);
 
-    free(l);
-    lexema** output = malloc(queue_length * sizeof(lexema*));
+    lexema** output = mem_malloc(queue_length * sizeof(lexema*));
 
-    i = 0;
+    i = -1;
 
-    while (queue[i]->type != end) {
+    while (queue[++i]->type != end) 
         output[i] = queue[i];
-        i++;
-    }
     output[i] = queue[i];
+
+    mem_free(l);
     return output;
 }
 

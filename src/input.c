@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "mem.h"
 #include "lexema.h"
 #include "math_func.h"
 #define SIZE 1001
@@ -12,8 +12,8 @@ void clear_array(char arr[], int n);
 
 lexema **input(void) {
     char *string;
-    lexema **lex = (lexema **)malloc(sizeof(lexema *) * SIZE);
-    string = (char *)malloc(sizeof(char) * SIZE);
+    lexema **lex = (lexema **)mem_malloc(sizeof(lexema *) * SIZE);
+    string = (char *)mem_malloc(sizeof(char) * SIZE);
     if (string == NULL) {
         printf("Memory allocation error\n");
         exit(EXIT_FAILURE);
@@ -52,14 +52,14 @@ lexema **input(void) {
                 index_lexema++;
             } else {
                 init_lexem(0, sqrt_l, lex, index_lexema);
-                lex[index_lexema]->one_param = sqrt;
+                lex[index_lexema]->one_param = _sqrt;
                 i += 3;
                 index_lexema++;
             }
         }
         if (ch == 'l') {
             init_lexem(0, log_e, lex, index_lexema);
-            lex[index_lexema]->one_param = log;
+            lex[index_lexema]->one_param = _log_e;
             i += 1;
             index_lexema++;
         }
@@ -124,12 +124,21 @@ lexema **input(void) {
         i++;
     }
     init_lexem(0, end, lex, index_lexema);
-    free(string);
-    return lex;
-}
+    mem_free(string);
+    
+    printf("index = %d", index_lexema);
+    lexema **res_lex = mem_malloc(sizeof(lexema *) * (index_lexema + 1));
+    i = -1;
+    while(++i <= index_lexema)
+        res_lex[i] = lex[i];
 
+    mem_free(lex);
+
+    return res_lex;
+}
+ 
 void init_lexem(double value, lexema_type type, lexema **lex, int index) {
-    lex[index] = (lexema *)malloc(sizeof(lexema));
+    lex[index] = (lexema *)mem_malloc(sizeof(lexema));
     if (lex[index] == NULL) {
         printf("Memory allocation error\n");
         exit(EXIT_FAILURE);

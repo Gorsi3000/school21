@@ -1,6 +1,10 @@
 #ifndef LEXEMA_H
 #define LEXEMA_H
 
+#include "mem.h"
+#include <stdlib.h>
+#define USE_MEM_DEBUG
+
 typedef enum {
     operand,
     sinus,
