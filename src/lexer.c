@@ -151,6 +151,7 @@ lexema** postfix_polish_notashion(lexema** l) {
                 // или если неверно поставлени разделитель
                 // необходимо обработать эти ситуацию
                 if (op_head) mem_free(stack_pop(&op_head));
+                mem_free(l[i]);
                 break;
 
             case operand:

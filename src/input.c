@@ -126,15 +126,16 @@ lexema **input(void) {
     init_lexem(0, end, lex, index_lexema);
     mem_free(string);
     
-    printf("index = %d", index_lexema);
-    lexema **res_lex = mem_malloc(sizeof(lexema *) * (index_lexema + 1));
-    i = -1;
-    while(++i <= index_lexema)
-        res_lex[i] = lex[i];
+    // printf("index = %d", index_lexema);
+    // lexema **res_lex = mem_malloc(sizeof(lexema *) * (index_lexema + 1));
+    // i = -1;
+    // while(++i <= index_lexema)
+    //     res_lex[i] = lex[i];
 
-    mem_free(lex);
+    // mem_free(lex);
 
-    return res_lex;
+    // return res_lex;
+    return lex;
 }
  
 void init_lexem(double value, lexema_type type, lexema **lex, int index) {
