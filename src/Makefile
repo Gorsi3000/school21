@@ -3,11 +3,11 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 
 all: main clean
 
-main: shared.o
-	$(CC) $(CFLAGS) shared.o -o ../build/main
+main: modules_db.o
+	$(CC) $(CFLAGS) modules_db.o -o ../build/main
 
-shared.o: shared.c
-	$(CC) $(CFLAGS) -c shared.c -o shared.o
+modules_db.o: modules_db.c
+	$(CC) $(CFLAGS) -c modules_db.c -o modules_db.o
 
 clean:
 	rm *.o
