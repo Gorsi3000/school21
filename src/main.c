@@ -4,17 +4,17 @@ int main() {
     int mode;
     do {
         printf(
-                "\nWelcome to s21 DB!\n\nChoose which operation you would like to perform:\n"
-                " 1. SELECT\n"
-                " 2. INSERT\n"
-                " 3. UPDATE\n"
-                " 4. DELETE\n"
-                " 5. Get all active additional modules (last module status is 1)\n"
-                " 6. Delete modules by ids\n"
-                " 7. Set protected mode for module by id\n"
-                " 8. Move module by id to specified memory level and cell\n"
-                " 9. Set protection flag of the specified memory level\n"
-                " 0. Close the program\n\n");
+            "\nWelcome to s21 DB!\n\nChoose which operation you would like to perform:\n"
+            " 1. SELECT\n"
+            " 2. INSERT\n"
+            " 3. UPDATE\n"
+            " 4. DELETE\n"
+            " 5. Get all active additional modules (last module status is 1)\n"
+            " 6. Delete modules by ids\n"
+            " 7. Set protected mode for module by id\n"
+            " 8. Move module by id to specified memory level and cell\n"
+            " 9. Set protection flag of the specified memory level\n"
+            " 0. Close the program\n\n");
         if (scanf("%d", &mode) == 1 && mode > -1 && mode < 10) {
             switch (mode) {
                 case 1:
