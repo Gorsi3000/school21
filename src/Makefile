@@ -4,6 +4,9 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 all: build_db clean
 
 build_db: modules_db.o master_modules.o master_levels.o master_status_events.o
+	clang-format -n *.c
+	clang-format -n *.h
+	cppcheck --enable=all --suppress=missingIncludeSystem *.c
 	$(CC) $(CFLAGS) modules_db.o master_modules.o master_levels.o master_status_events.o -o ../build/main
 
 modules_db.o: modules_db.c

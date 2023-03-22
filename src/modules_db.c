@@ -6,19 +6,6 @@
 
 int main() {
     int mode;
-    FILE *fptr;
-    fptr = fopen("../materials/master_modules.db", "r+b");
-    int fields_count = count_modules(fptr);
-    print_modules(fptr, fields_count);
-    fclose(fptr);
-    fptr = fopen("../materials/master_levels.db", "r+b");
-    fields_count = count_levels(fptr);
-    print_levels(fptr, fields_count);
-    fclose(fptr);
-    fptr = fopen("../materials/master_status_events.db", "r+b");
-    fields_count = count_events(fptr);
-    print_events(fptr, fields_count);
-    fclose(fptr);
     do {
         printf(
             "\nWelcome to s21 DB!\n\nChoose which operation you would like to perform:\n"
@@ -31,8 +18,9 @@ int main() {
             " 7. Set protected mode for module by id\n"
             " 8. Move module by id to specified memory level and cell\n"
             " 9. Set protection flag of the specified memory level\n"
+            " 10. [DEVELOPMENT] Display all tables at once\n"
             " 0. Close the program\n\n");
-        if (scanf("%d", &mode) == 1 && mode > -1 && mode < 10) {
+        if (scanf("%d", &mode) == 1 && mode > -1 && mode < 11) {
             switch (mode) {
                 case 1:
                     printf("\n[placeholder] select\n");
@@ -60,6 +48,25 @@ int main() {
                     break;
                 case 9:
                     printf("\n[placeholder] set flags\n");
+                    break;
+                case 10:
+                    printf("\nTHIS IS DEVELOPMENTAL FEATURE\n\n");
+                    printf("\nModules\n");
+                    FILE *fptr;
+                    fptr = fopen("../materials/master_modules.db", "r+b");
+                    int fields_count = count_modules(fptr);
+                    print_modules(fptr, fields_count);
+                    fclose(fptr);
+                    printf("\nLevels\n");
+                    fptr = fopen("../materials/master_levels.db", "r+b");
+                    fields_count = count_levels(fptr);
+                    print_levels(fptr, fields_count);
+                    fclose(fptr);
+                    printf("\nStatus events\n");
+                    fptr = fopen("../materials/master_status_events.db", "r+b");
+                    fields_count = count_events(fptr);
+                    print_events(fptr, fields_count);
+                    fclose(fptr);
                     break;
             }
         } else {
