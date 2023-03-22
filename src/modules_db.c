@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "master_levels.h"
 #include "master_modules.h"
 #include "master_status_events.h"
+#include "shared.h"
 
 int main() {
     int mode;
@@ -22,9 +24,36 @@ int main() {
             " 0. Close the program\n\n");
         if (scanf("%d", &mode) == 1 && mode > -1 && mode < 11) {
             switch (mode) {
-                case 1:
-                    printf("\n[placeholder] select\n");
+                case 1: {
+                    printf(
+                        "\nChoose table:\n"
+                        " 1. Modules\n"
+                        " 2. Levels\n"
+                        " 3. Status events\n\n");
+                    int table = 1;
+                    if (scanf("%d", &table) == 1 && table > 0 && table < 4) {
+                        printf("\nEnter amount of rows to display or put -1 to output all of them:\n\n");
+                        int amount = -1;
+                        if (scanf("%d", &amount) == 1 && amount > -1) {
+                            if (table == 2) {
+                                for (int i = 1; i < amount + 1; i++) {
+                                    select(table, i);
+                                }
+                            } else {
+                                for (int i = 0; i < amount; i++) {
+                                    select(table, i);
+                                }
+                            }
+                        } else if (amount == -1) {
+                            select(table, amount);
+                        } else {
+                            printf("\nNo such row in the table!\n");
+                        }
+                    } else {
+                        printf("\nNo such table!\n");
+                    }
                     break;
+                }
                 case 2:
                     printf("\n[placeholder] insert\n");
                     break;
