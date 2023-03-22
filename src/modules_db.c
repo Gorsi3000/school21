@@ -1,7 +1,24 @@
 #include <stdio.h>
 
+#include "master_levels.h"
+#include "master_modules.h"
+#include "master_status_events.h"
+
 int main() {
     int mode;
+    FILE *fptr;
+    fptr = fopen("../materials/master_modules.db", "r+b");
+    int fields_count = count_modules(fptr);
+    print_modules(fptr, fields_count);
+    fclose(fptr);
+    fptr = fopen("../materials/master_levels.db", "r+b");
+    fields_count = count_levels(fptr);
+    print_levels(fptr, fields_count);
+    fclose(fptr);
+    fptr = fopen("../materials/master_status_events.db", "r+b");
+    fields_count = count_events(fptr);
+    print_events(fptr, fields_count);
+    fclose(fptr);
     do {
         printf(
             "\nWelcome to s21 DB!\n\nChoose which operation you would like to perform:\n"
@@ -46,7 +63,7 @@ int main() {
                     break;
             }
         } else {
-            printf("No such operation in the menu! Try again.\n");
+            printf("\nNo such operation in the menu! Try again.\n");
         }
     } while (mode != 0);
     printf("\nThanks for using s21 DB! Program termination.\n\n");
