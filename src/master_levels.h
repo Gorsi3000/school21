@@ -3,11 +3,11 @@
 #ifndef T15D24_1_MASTER_LEVELS_H
 #define T15D24_1_MASTER_LEVELS_H
 
-struct level {
+typedef struct level {
     int number_of_memory;
     int number_of_cells;
     int d_flag;
-};
+} levels;
 
 void print_levels(FILE *fptr, int fields_count);
 int count_levels(FILE *fptr);

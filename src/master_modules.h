@@ -3,13 +3,13 @@
 #ifndef T15D24_1_MASTER_MODULES_H
 #define T15D24_1_MASTER_MODULES_H
 
-struct module {
+typedef struct module {
     int module_id;
     char module_name[30];
     int number_of_memory;
     int number_of_cells;
     int d_flag;
-};
+} module;
 
 void print_modules(FILE *fptr, int fields_count);
 int count_modules(FILE *fptr);

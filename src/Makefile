@@ -3,9 +3,11 @@ CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 
 all: build_db clean
 
-build_db: modules_db.o master_modules.o master_levels.o master_status_events.o shared.o
-	$(CC) $(CFLAGS) modules_db.o master_modules.o master_levels.o master_status_events.o shared.o -o ../build/main
+build_db: modules_db.o master_modules.o master_levels.o\
+			 master_status_events.o shared.o crudl.o
+	$(CC) $(CFLAGS) @^ -o ../build/main
 
+crudl.o: crudl.c entity.h
 modules_db.o: modules_db.c
 	$(CC) $(CFLAGS) -c modules_db.c -o modules_db.o
 
